@@ -1,39 +1,48 @@
 "use client";
 
-import { useCart } from "../../context/CartContext";
-import Link from "next/link";
 import { useState } from "react";
+import Link from "next/link";
+import { useCart } from "../../context/CartContext";
+import { sendOrderNotification } from "../../lib/notifications";
 
 export default function CheckoutPage() {
-  const { cartItems, cartTotal, clearCart } = useCart();
+  const { cartItems, clearCart } = useCart();
+  const [isOrdering, setIsOrdering] = useState(false);
   const [isOrdered, setIsOrdered] = useState(false);
 
-  const handleVenmoPayment = () => {
-    const venmoHandle = "justapidgeon";
-    const amount = cartTotal.toFixed(2);
-    const note = encodeURIComponent("Pidgeon Coffee Order: " + cartItems.map(i => i.name).join(", "));
-    
-    // Venmo deep link
-    const venmoUrl = `venmo://paycharge?txn=pay&recipients=${venmoHandle}&amount=${amount}&note=${note}`;
-    
-    // Attempt to open Venmo app
-    window.location.href = venmoUrl;
+  const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const total = subtotal.toFixed(2);
 
-    // Fallback/Simulate order complete
-    setTimeout(() => {
-      setIsOrdered(true);
-      clearCart();
-    }, 2000);
+  const handleCompleteOrder = async () => {
+    setIsOrdering(true);
+    
+    // 1. Fire notification
+    await sendOrderNotification({
+      items: cartItems,
+      total: total
+    });
+
+    // 2. Clear cart and show success state (locally)
+    // In a real app, you might wait for Venmo success, but here we redirect immediately.
+    const orderNote = `Pidgeon Coffee Order: ${cartItems.map(i => i.name).join(", ")}`;
+    const venmoUrl = `venmo://paycharge?txn=pay&recipients=justapidgeon&amount=${total}&note=${encodeURIComponent(orderNote)}`;
+
+    // 3. Clear cart
+    clearCart();
+    setIsOrdered(true);
+
+    // 4. Redirect to Venmo
+    window.location.href = venmoUrl;
   };
 
   if (isOrdered) {
     return (
       <div className="checkout-container success">
-        <div className="success-content fade-in">
-          <div className="success-icon">☕✨</div>
-          <h1>Order Placed!</h1>
-          <p>Thank you for supporting Pidgeon Coffee. Your brew is being prepared with heart.</p>
-          <Link href="/" className="back-home">Back to Menu</Link>
+        <div className="glass-card success-content fade-in">
+          <div className="success-icon">☕</div>
+          <h1>Brewing Initiated</h1>
+          <p>We've sent your order details to our baristas. Please ensure payment is completed via Venmo.</p>
+          <Link href="/" className="back-home">Return to Sanctuary</Link>
         </div>
       </div>
     );
@@ -43,75 +52,73 @@ export default function CheckoutPage() {
     <div className="checkout-page">
       <div className="container">
         <header className="checkout-header">
-          <Link href="/" className="back-link">&larr; Back to Menu</Link>
-          <h1>Checkout</h1>
+          <Link href="/" className="back-link">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Back to Menu
+          </Link>
+          <h1 className="logo-brand">Checkout</h1>
         </header>
 
-        {cartItems.length === 0 ? (
-          <div className="empty-state">
-            <p>Your cart is empty. Let's find some coffee!</p>
-            <Link href="/" className="go-shop">Browse Menu</Link>
-          </div>
-        ) : (
-          <div className="checkout-grid">
-            <div className="order-summary">
-              <h2>Order Summary</h2>
-              <div className="summary-items">
-                {cartItems.map((item) => (
-                  <div key={item.cartId} className="summary-item">
-                    <div className="item-info">
-                      <span className="qty">{item.quantity}x</span>
-                      <div>
-                        <h3>{item.name}</h3>
-                        <p className="customs">
-                          {Object.values(item.customizations).join(" • ")}
-                        </p>
-                      </div>
-                    </div>
-                    <span className="price">${(item.price * item.quantity).toFixed(2)}</span>
-                  </div>
-                ))}
-              </div>
-              
-              <div className="total-block">
-                <div className="total-row">
-                  <span>Subtotal</span>
-                  <span>${cartTotal.toFixed(2)}</span>
-                </div>
-                <div className="total-row">
-                  <span>Delivery</span>
-                  <span>Free</span>
-                </div>
-                <div className="total-row grand-total">
-                  <span>Total</span>
-                  <span>${cartTotal.toFixed(2)}</span>
-                </div>
-              </div>
+        <div className="checkout-content">
+          {cartItems.length === 0 ? (
+            <div className="empty-checkout glass-card fade-in">
+              <p>Your sanctuary is empty. Add some brew first.</p>
+              <Link href="/" className="cta-button">Browse Menu</Link>
             </div>
+          ) : (
+            <div className="checkout-form-container fade-in">
+              <div className="glass-card order-summary-focused">
+                <h2 className="section-title">Your Order Summary</h2>
+                <div className="order-items-list">
+                  {cartItems.map((item) => (
+                    <div key={item.cartId} className="checkout-item">
+                      <div className="item-info">
+                        <span className="item-qty">{item.quantity}x</span>
+                        <div className="item-name-group">
+                          <h3>{item.name}</h3>
+                          <p className="item-details">
+                            {item.customizations.size} • {item.customizations.temp} • {item.customizations.milk}
+                          </p>
+                        </div>
+                      </div>
+                      <span className="item-price">${(item.price * item.quantity).toFixed(2)}</span>
+                    </div>
+                  ))}
+                </div>
 
-            <div className="payment-options">
-              <h2>Payment</h2>
-              <p className="payment-desc">
-                Payment is processed via Venmo for a seamless homegrown experience.
-              </p>
-              
-              <div className="venmo-card">
-                <div className="venmo-header">
-                  <span className="venmo-logo">Venmo</span>
+                <div className="checkout-totals">
+                  <div className="total-row">
+                    <span>Subtotal</span>
+                    <span>${total}</span>
+                  </div>
+                  <div className="total-row main-total">
+                    <span>Total</span>
+                    <span>${total}</span>
+                  </div>
+                </div>
+
+                <div className="venmo-incentive">
+                  <p>Secure payment via <strong>Venmo</strong></p>
                   <span className="handle">@justapidgeon</span>
                 </div>
-                <button className="venmo-btn" onClick={handleVenmoPayment}>
-                  Pay with Venmo
-                </button>
-                <p className="note">Order will be confirmed after payment is received.</p>
-              </div>
 
-              <div className="alternative">
-                <p>Problems with the app? Pay manually to <strong>@justapidgeon</strong> and we'll match your order!</p>
+                <button 
+                  onClick={handleCompleteOrder} 
+                  className="complete-order-btn"
+                  disabled={isOrdering}
+                >
+                  {isOrdering ? "Initiating..." : "Complete Order & Pay"}
+                </button>
+                
+                <p className="disclaimer">
+                  Clicking "Complete Order" will open your Venmo app and notify the barista immediately.
+                </p>
               </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

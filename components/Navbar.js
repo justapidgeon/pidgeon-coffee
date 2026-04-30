@@ -10,8 +10,7 @@ export default function Navbar() {
     <nav className="navbar">
       <div className="container nav-content">
         <Link href="/" className="logo-brand">
-          <div className="logo-placeholder">🐦</div>
-          <span className="brand-name">Pidgeon Coffee</span>
+          Pidgeon Coffee
         </Link>
         
         <div className="nav-links">
