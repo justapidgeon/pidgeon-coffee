@@ -1,0 +1,18 @@
+export default function Hero() {
+  return (
+    <section className="hero">
+      <div className="container hero-content">
+        <div className="logo-container fade-in">
+          <div className="logo-main">🐦</div>
+        </div>
+        <h1 className="hero-title fade-in">Pidgeon Coffee</h1>
+        <p className="hero-subtitle fade-in" style={{ animationDelay: '0.2s' }}>
+          Small batch. Big heart. Home brewed in every cup.
+        </p>
+        <a href="#menu" className="cta-button fade-in" style={{ animationDelay: '0.4s' }}>
+          View Our Menu
+        </a>
+      </div>
+    </section>
+  );
+}
