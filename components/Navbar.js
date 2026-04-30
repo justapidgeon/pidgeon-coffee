@@ -10,7 +10,7 @@ export default function Navbar() {
     <nav className="navbar">
       <div className="container nav-content">
         <Link href="/" className="logo-brand">
-          Pidgeon Coffee
+          pidgeon coffee.
         </Link>
         
         <div className="nav-links">
