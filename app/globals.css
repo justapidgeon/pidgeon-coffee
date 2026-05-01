@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=League+Spartan:wght@900&family=Lexend:wght@900&family=Montserrat:wght@900&family=Outfit:wght@700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+
 @font-face {
   font-family: 'AvantGarde';
   src: url('/fonts/avant-garde.ttf') format('truetype');
@@ -5,8 +7,6 @@
   font-style: normal;
   font-display: swap;
 }
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=League+Spartan:wght@900&family=Lexend:wght@900&family=Montserrat:wght@900&family=Outfit:wght@700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
 
 :root {
   --bg: #0f0d0c;
