@@ -3,7 +3,7 @@ export default function Hero() {
     <section className="hero">
       <div className="container hero-content">
         <h1 className="hero-title fade-in">
-          Wake Up To Better Coffee
+          Wake Up <br /> To Better Coffee
         </h1>
         <p className="hero-subtitle fade-in" style={{ animationDelay: '0.2s' }}>
           Small batch. Big heart. Home brewed in every cup.

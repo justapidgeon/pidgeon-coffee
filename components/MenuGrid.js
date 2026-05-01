@@ -19,7 +19,16 @@ export default function MenuGrid() {
           {menuItems.map((item) => (
             <div key={item.id} className="menu-card fade-in">
               <div className="card-image">
-                <span>{item.icon}</span>
+                <img 
+                  src={item.image} 
+                  alt={item.name} 
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.nextSibling.style.display = 'block';
+                  }}
+                />
+                <span style={{ display: 'none' }}>☕</span>
               </div>
               <div className="card-content">
                 <div className="card-header">
