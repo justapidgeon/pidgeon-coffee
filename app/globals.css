@@ -65,9 +65,9 @@ button {
 }
 
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 3rem;
+  max-width: 1600px;
+  margin: 0;
+  padding: 0 8vw;
 }
 
 /* Animations */
@@ -191,11 +191,11 @@ button {
   gap: 10px;
 }
 
-.hero-tagline::after {
-  content: "";
-  width: 20px;
-  height: 1px;
-  background: var(--accent);
+.hero-tagline::before {
+  content: "—";
+  margin-right: 15px;
+  color: var(--accent);
+  font-weight: 400;
 }
 .hero-subtitle {
   font-size: 1.25rem;
