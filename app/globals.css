@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'AvantGarde';
+  src: url('/fonts/avant-garde.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=League+Spartan:wght@900&family=Lexend:wght@900&family=Montserrat:wght@900&family=Outfit:wght@700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
 
 :root {
@@ -11,7 +19,7 @@
   --border: rgba(200, 149, 108, 0.1);
   --success: #8da18d;
   --logo-color: #D5CBB6;
-  --font-logo: 'League Spartan', sans-serif;
+  --font-logo: 'AvantGarde', 'League Spartan', sans-serif;
   --font-heading: 'Lexend', sans-serif;
   --font-accent: 'Playfair Display', serif;
   --font-body: 'Inter', sans-serif;
@@ -143,17 +151,14 @@ button {
   height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  text-align: left;
   background: radial-gradient(circle at 10%, rgba(200, 149, 108, 0.05) 0%, rgba(26, 22, 20, 1) 70%);
-  padding: 0 2rem;
 }
 .hero-content { 
   display: flex; 
   flex-direction: column; 
   align-items: flex-start; 
   gap: 1.5rem; 
-  width: 100%;
+  text-align: left;
 }
 .logo-main { font-size: 5rem; margin-bottom: 0.5rem; filter: drop-shadow(0 0 20px rgba(200, 149, 108, 0.2)); }
 .hero-title {
