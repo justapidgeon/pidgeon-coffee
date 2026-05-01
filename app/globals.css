@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lexend:wght@900&family=Montserrat:wght@900&family=Outfit:wght@700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=League+Spartan:wght@900&family=Lexend:wght@900&family=Montserrat:wght@900&family=Outfit:wght@700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
 
 :root {
   --bg: #0f0d0c;
@@ -10,7 +10,8 @@
   --text-muted: #8a7d6e;
   --border: rgba(200, 149, 108, 0.1);
   --success: #8da18d;
-  --font-logo: 'Montserrat', sans-serif;
+  --logo-color: #D5CBB6;
+  --font-logo: 'League Spartan', sans-serif;
   --font-heading: 'Lexend', sans-serif;
   --font-accent: 'Playfair Display', serif;
   --font-body: 'Inter', sans-serif;
@@ -112,10 +113,7 @@ button {
   font-weight: 900;
   text-transform: lowercase;
   letter-spacing: -0.02em;
-  background: linear-gradient(to bottom, var(--text) 50%, var(--accent) 150%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--logo-color);
   transition: var(--transition);
 }
 .logo-brand:hover {
