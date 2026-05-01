@@ -79,7 +79,7 @@ export default function CheckoutPage() {
                         <div className="item-name-group">
                           <h3>{item.name}</h3>
                           <p className="item-details">
-                            {item.customizations.size} • {item.customizations.temp} • {item.customizations.milk}
+                            {Object.values(item.customizations).join(' • ')}
                           </p>
                         </div>
                       </div>
