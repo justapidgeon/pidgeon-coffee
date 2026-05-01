@@ -1,22 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lexend:wght@900&family=Outfit:wght@700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
 
 :root {
-  --bg: #1a1614;
-  --surface: #231e1b;
-  --surface-hover: #2d2621;
+  --bg: #0f0d0c;
+  --surface: #1a1614;
+  --surface-hover: #231e1b;
   --accent: #c8956c;
   --accent-muted: #a67c5a;
   --text: #f0e6d3;
-  --text-muted: #9a8d7f;
-  --border: rgba(200, 149, 108, 0.15);
+  --text-muted: #8a7d6e;
+  --border: rgba(200, 149, 108, 0.1);
   --success: #8da18d;
   --font-logo: 'Lexend', sans-serif;
   --font-heading: 'Lexend', sans-serif;
+  --font-accent: 'Playfair Display', serif;
   --font-body: 'Inter', sans-serif;
-  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  --glass: rgba(35, 30, 27, 0.7);
-  --glass-border: rgba(200, 149, 108, 0.1);
+  --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  --shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  --glass: rgba(15, 13, 12, 0.8);
+  --glass-border: rgba(200, 149, 108, 0.05);
 }
 
 * {
@@ -158,12 +159,39 @@ button {
 }
 .logo-main { font-size: 5rem; margin-bottom: 0.5rem; filter: drop-shadow(0 0 20px rgba(200, 149, 108, 0.2)); }
 .hero-title {
-  font-size: 5rem;
+  font-size: 6rem;
+  line-height: 1.1;
   color: var(--text);
-  margin: 0;
+  margin: 0.5rem 0 1.5rem;
   text-transform: none;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.04em;
   font-weight: 900;
+}
+
+.hero-title em {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  opacity: 0.9;
+}
+
+.hero-tagline {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero-tagline::before {
+  content: "";
+  width: 20px;
+  height: 1px;
+  background: var(--accent);
 }
 .hero-subtitle {
   font-size: 1.25rem;
@@ -172,20 +200,37 @@ button {
   margin-bottom: 1rem;
   font-style: italic;
 }
+.hero-buttons {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
 .cta-button {
   display: inline-block;
   background: var(--accent);
-  color: var(--bg);
-  padding: 1rem 2.5rem;
-  border-radius: 50px;
-  font-weight: 600;
+  color: #000;
+  padding: 1rem 2rem;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 0.9rem;
   transition: var(--transition);
-  box-shadow: 0 4px 15px rgba(200, 149, 108, 0.3);
 }
+
+.cta-button.outline {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
 .cta-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 25px rgba(200, 149, 108, 0.4);
-  background: var(--accent-muted);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(200, 149, 108, 0.2);
+}
+
+.cta-button.outline:hover {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 /* Menu Grid */

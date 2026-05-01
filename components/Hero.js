@@ -2,15 +2,23 @@ export default function Hero() {
   return (
     <section className="hero">
       <div className="hero-content">
-        <h1 className="hero-title fade-in">
-          Wake Up <br /> To Better Coffee
+        <span className="hero-tagline fade-in">
+          HOME BREWED / SMALL BATCH / ROASTED WITH HEART
+        </span>
+        <h1 className="hero-title fade-in" style={{ animationDelay: '0.1s' }}>
+          Wake up <br /> <em>to better coffee.</em>
         </h1>
         <p className="hero-subtitle fade-in" style={{ animationDelay: '0.2s' }}>
-          Small batch. Big heart. Home brewed in every cup.
+          I create brew identities, flavors, and visuals that are built to be remembered.
         </p>
-        <a href="#menu" className="cta-button fade-in" style={{ animationDelay: '0.4s' }}>
-          View Our Menu
-        </a>
+        <div className="hero-buttons fade-in" style={{ animationDelay: '0.4s' }}>
+          <a href="#menu" className="cta-button">
+            View My Menu
+          </a>
+          <a href="#menu" className="cta-button outline">
+            Start an Order
+          </a>
+        </div>
       </div>
     </section>
   );
