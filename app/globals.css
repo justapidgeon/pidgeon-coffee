@@ -120,8 +120,9 @@ button {
   font-size: 1.1rem;
   font-weight: 900;
   text-transform: lowercase;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.05em;
   color: var(--logo-color);
+  -webkit-text-stroke: 0.5px var(--logo-color);
   transition: var(--transition);
 }
 .logo-brand:hover {
