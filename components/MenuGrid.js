@@ -22,7 +22,7 @@ export default function MenuGrid() {
                 <img 
                   src={item.image} 
                   alt={item.name} 
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '1rem' }}
                   onError={(e) => {
                     e.target.style.display = 'none';
                     e.target.nextSibling.style.display = 'block';

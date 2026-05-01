@@ -1,7 +1,7 @@
 export default function Hero() {
   return (
     <section className="hero">
-      <div className="container hero-content">
+      <div className="hero-content">
         <h1 className="hero-title fade-in">
           Wake Up <br /> To Better Coffee
         </h1>

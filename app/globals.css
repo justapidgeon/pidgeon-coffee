@@ -107,7 +107,7 @@ button {
   align-items: center;
   gap: 12px;
   font-family: var(--font-logo);
-  font-size: 1.4rem;
+  font-size: 1.1rem;
   font-weight: 900;
   text-transform: lowercase;
   letter-spacing: -0.02em;
@@ -146,9 +146,16 @@ button {
   align-items: center;
   justify-content: flex-start;
   text-align: left;
-  background: radial-gradient(circle at 20%, rgba(200, 149, 108, 0.05) 0%, rgba(26, 22, 20, 1) 70%);
+  background: radial-gradient(circle at 10%, rgba(200, 149, 108, 0.05) 0%, rgba(26, 22, 20, 1) 70%);
+  padding: 0 2rem;
 }
-.hero-content { display: flex; flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+.hero-content { 
+  display: flex; 
+  flex-direction: column; 
+  align-items: flex-start; 
+  gap: 1.5rem; 
+  width: 100%;
+}
 .logo-main { font-size: 5rem; margin-bottom: 0.5rem; filter: drop-shadow(0 0 20px rgba(200, 149, 108, 0.2)); }
 .hero-title {
   font-size: 5rem;
