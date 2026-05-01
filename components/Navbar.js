@@ -9,7 +9,7 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <div className="container nav-content">
-        <Link href="/" className="logo-brand">
+        <Link href="/" className="logo-brand" style={{ fontWeight: 900 }}>
           pidgeon coffee.
         </Link>
         

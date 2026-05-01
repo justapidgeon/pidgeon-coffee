@@ -19,7 +19,7 @@ export default function MenuGrid() {
           {menuItems.map((item) => (
             <div key={item.id} className="menu-card fade-in">
               <div className="card-image">
-                <span>☕</span>
+                <span>{item.icon}</span>
               </div>
               <div className="card-content">
                 <div className="card-header">
