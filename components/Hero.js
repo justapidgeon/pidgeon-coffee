@@ -15,9 +15,6 @@ export default function Hero() {
           <a href="#menu" className="cta-button">
             View My Menu
           </a>
-          <a href="#menu" className="cta-button outline">
-            Start an Order
-          </a>
         </div>
       </div>
     </section>

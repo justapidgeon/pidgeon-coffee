@@ -10,18 +10,17 @@ export default function Navbar() {
     <nav className="navbar" style={{ background: 'transparent', border: 'none', backdropFilter: 'none' }}>
       <div className="container nav-content">
         <Link href="/" className="logo-brand">
-          pidgeon.
+          pidgeon coffee.
         </Link>
         
         <div className="nav-links" style={{ textTransform: 'capitalize', fontSize: '0.9rem', letterSpacing: '0.02em' }}>
-          <Link href="/#menu">Work</Link>
-          <Link href="/#menu">Commissions</Link>
+          <Link href="/#menu">Menu</Link>
           <button 
             onClick={() => setIsCartOpen(true)} 
             className="cart-trigger" 
             style={{ padding: '0', marginLeft: '1rem' }}
           >
-            Contact ({cartCount})
+            Cart ({cartCount})
           </button>
         </div>
       </div>
