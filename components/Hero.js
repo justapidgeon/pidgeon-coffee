@@ -2,7 +2,7 @@ export default function Hero() {
   return (
     <section className="hero">
       <div className="container hero-content">
-        <h1 className="hero-title fade-in logo-brand" style={{ fontSize: '5rem', background: 'none', webkitTextFillColor: 'var(--text)', fontWeight: 900 }}>
+        <h1 className="hero-title fade-in">
           Wake Up To Better Coffee
         </h1>
         <p className="hero-subtitle fade-in" style={{ animationDelay: '0.2s' }}>
