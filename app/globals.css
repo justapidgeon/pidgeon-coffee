@@ -67,7 +67,7 @@ button {
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 3rem;
 }
 
 /* Animations */
@@ -190,7 +190,7 @@ button {
   gap: 10px;
 }
 
-.hero-tagline::before {
+.hero-tagline::after {
   content: "";
   width: 20px;
   height: 1px;
