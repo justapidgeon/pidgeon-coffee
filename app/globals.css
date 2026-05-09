@@ -66,7 +66,7 @@ button {
 
 .container {
   max-width: 1600px;
-  margin: 0;
+  margin: 0 auto;
   padding: 0 8vw;
 }
 
@@ -242,7 +242,7 @@ button {
 .section-header { text-align: center; margin-bottom: 3rem; }
 .section-title { font-size: 2.5rem; color: var(--accent); margin-bottom: 0.5rem; }
 .section-subtitle { color: var(--text-muted); }
-.menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; }
+.menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; justify-content: center; }
 .menu-card {
   background: var(--surface);
   border-radius: 20px;

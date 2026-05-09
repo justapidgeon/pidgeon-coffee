@@ -1,11 +1,11 @@
 export const menuItems = [
   {
-    id: "drip-coffee",
-    name: "Drip Coffee",
-    price: 3.69,
-    description: "Classic, smooth, and reliable. Our house blend is slow-brewed to perfection for a clean, comforting cup.",
+    id: "espresso",
+    name: "Espresso",
+    price: 3.50,
+    description: "A concentrated shot of pure coffee essence, thick and rich with a beautiful crema.",
     category: "Hot Coffee",
-    image: "/assets/menu/drip.png"
+    image: "/assets/menu/espresso.png"
   },
   {
     id: "americano",
@@ -14,14 +14,6 @@ export const menuItems = [
     description: "A bold double shot of espresso tempered with hot water, preserving the rich crema and deep flavor.",
     category: "Hot Coffee",
     image: "/assets/menu/americano.png"
-  },
-  {
-    id: "cold-brew",
-    name: "Cold Brew",
-    price: 5.25,
-    description: "Steeped for 18 hours for a velvet-smooth finish with low acidity and naturally sweet chocolate notes.",
-    category: "Cold Coffee",
-    image: "/assets/menu/cold-brew.png"
   },
   {
     id: "latte",
@@ -40,6 +32,14 @@ export const menuItems = [
     image: "/assets/menu/cappuccino.png"
   },
   {
+    id: "mocha",
+    name: "Mocha",
+    price: 5.25,
+    description: "A rich blend of espresso, steamed milk, and premium chocolate syrup, topped with whipped cream.",
+    category: "Hot Coffee",
+    image: "/assets/menu/mocha.png"
+  },
+  {
     id: "flat-white",
     name: "Flat White",
     price: 4.50,
@@ -48,12 +48,28 @@ export const menuItems = [
     image: "/assets/menu/flat-white.png"
   },
   {
+    id: "macchiato",
+    name: "Macchiato",
+    price: 3.75,
+    description: "A classic espresso shot 'marked' with a dollop of frothy milk for a touch of sweetness.",
+    category: "Hot Coffee",
+    image: "/assets/menu/macchiato.png"
+  },
+  {
+    id: "iced-latte",
+    name: "Iced Latte",
+    price: 5.25,
+    description: "Chilled espresso and milk poured over ice. Refreshing, smooth, and perfect for a hot day.",
+    category: "Cold Coffee",
+    image: "/assets/menu/iced-latte.png"
+  },
+  {
     id: "matcha-latte",
     name: "Matcha Latte",
     price: 5.50,
     description: "Premium ceremonial grade matcha whisked with your choice of milk for an earthy, vibrant energy boost.",
     category: "Specialty",
-    image: "/assets/menu/matcha.png"
+    image: "/assets/menu/matcha-latte.png"
   }
 ];
 
