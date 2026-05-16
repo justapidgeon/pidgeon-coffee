@@ -17,7 +17,12 @@ export default function MenuGrid() {
 
         <div className="menu-grid">
           {menuItems.map((item) => (
-            <div key={item.id} className="menu-card fade-in">
+            <div 
+              key={item.id} 
+              className="menu-card fade-in"
+              onClick={() => setSelectedItem(item)}
+              style={{ cursor: 'pointer' }}
+            >
               <div className="card-image">
                 <img 
                   src={item.image} 
@@ -36,10 +41,7 @@ export default function MenuGrid() {
                   <span className="item-price">${item.price.toFixed(2)}</span>
                 </div>
                 <p className="item-desc">{item.description}</p>
-                <button 
-                  className="add-button"
-                  onClick={() => setSelectedItem(item)}
-                >
+                <button className="add-button">
                   Customize & Add
                 </button>
               </div>

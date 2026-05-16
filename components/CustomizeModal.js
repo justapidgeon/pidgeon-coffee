@@ -30,7 +30,8 @@ export default function CustomizeModal({ item, onClose }) {
         <div className="modal-header">
           <div className="header-info">
             <h2>Customize</h2>
-            <p>{item.name}</p>
+            <p className="modal-item-name" style={{ fontSize: '1.25rem', color: 'var(--text)', fontWeight: '600', marginTop: '0.25rem' }}>{item.name}</p>
+            <p className="modal-item-desc" style={{ marginTop: '0.5rem', fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: '1.5', maxWidth: '400px' }}>{item.description}</p>
           </div>
           <button className="close-btn" onClick={onClose}>&times;</button>
         </div>
