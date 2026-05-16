@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { customizationOptions } from "../data/menu";
 import { useCart } from "../context/CartContext";
 
@@ -25,6 +25,29 @@ export default function CustomizeModal({ item, onClose }) {
     Large: 1.00
   };
   const currentItemPrice = item.price + (sizeAdditions[selections.size] || 0);
+
+  const baseSizeOz = item.baseSize || 9;
+  const sizeOffsets = { Small: -1, Medium: 0, Large: 1 };
+  const currentSizeOz = baseSizeOz + (sizeOffsets[selections.size] || 0);
+  const availableRoom = currentSizeOz - 2;
+
+  const sweetnessVolumes = {
+    "None": 0,
+    "Light": 1,
+    "Medium": 2,
+    "Extra Sweet": 3
+  };
+
+  useEffect(() => {
+    if (selections.sweetness !== "None") {
+      if (sweetnessVolumes[selections.sweetness] > availableRoom) {
+        let newSweetness = "None";
+        if (availableRoom >= 2) newSweetness = "Medium";
+        else if (availableRoom >= 1) newSweetness = "Light";
+        setSelections(prev => ({ ...prev, sweetness: newSweetness }));
+      }
+    }
+  }, [selections.size, availableRoom, selections.sweetness]);
 
   const handleAdd = () => {
     const filteredSelections = {};
@@ -57,23 +80,32 @@ export default function CustomizeModal({ item, onClose }) {
             <div key={key} className="option-group">
               <h4 className="option-label">{key.charAt(0).toUpperCase() + key.slice(1)}</h4>
               <div className="option-pills">
-                {options.map(option => (
-                  <button
-                    key={option}
-                    className={`pill ${selections[key] === option ? 'active' : ''}`}
-                    onClick={() => handleSelection(key, option)}
-                  >
-                    {option}
-                  </button>
-                ))}
+                {options.map(option => {
+                  let isDisabled = false;
+                  if (key === "sweetness" && option !== "None") {
+                    if (sweetnessVolumes[option] > availableRoom) {
+                      isDisabled = true;
+                    }
+                  }
+
+                  return (
+                    <button
+                      key={option}
+                      className={`pill ${selections[key] === option ? 'active' : ''}`}
+                      onClick={() => !isDisabled && handleSelection(key, option)}
+                      style={isDisabled ? { opacity: 0.3, cursor: 'not-allowed', textDecoration: 'line-through' } : {}}
+                      disabled={isDisabled}
+                    >
+                      {option}
+                    </button>
+                  );
+                })}
               </div>
               
               {key === 'size' && selections.size && (
                 <div className="option-detail-container">
                   <div key={selections.size} className="slide-down-fade">
-                    {selections.size === 'Small' && '8oz'}
-                    {selections.size === 'Medium' && '9oz'}
-                    {selections.size === 'Large' && '10oz'}
+                    {currentSizeOz}oz
                   </div>
                 </div>
               )}
