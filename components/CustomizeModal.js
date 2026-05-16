@@ -27,7 +27,14 @@ export default function CustomizeModal({ item, onClose }) {
   const currentItemPrice = item.price + (sizeAdditions[selections.size] || 0);
 
   const handleAdd = () => {
-    addToCart({ ...item, price: currentItemPrice }, selections, quantity);
+    const filteredSelections = {};
+    Object.keys(selections).forEach(key => {
+      if (!item.allowedOptions || item.allowedOptions.includes(key)) {
+        filteredSelections[key] = selections[key];
+      }
+    });
+
+    addToCart({ ...item, price: currentItemPrice }, filteredSelections, quantity);
     onClose();
   };
 
@@ -44,7 +51,9 @@ export default function CustomizeModal({ item, onClose }) {
         </div>
 
         <div className="modal-body">
-          {Object.entries(customizationOptions).map(([key, options]) => (
+          {Object.entries(customizationOptions)
+            .filter(([key]) => !item.allowedOptions || item.allowedOptions.includes(key))
+            .map(([key, options]) => (
             <div key={key} className="option-group">
               <h4 className="option-label">{key.charAt(0).toUpperCase() + key.slice(1)}</h4>
               <div className="option-pills">
