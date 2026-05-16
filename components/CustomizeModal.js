@@ -7,7 +7,7 @@ import { useCart } from "../context/CartContext";
 export default function CustomizeModal({ item, onClose }) {
   const { addToCart } = useCart();
   const [selections, setSelections] = useState({
-    size: "Medium",
+    size: "Small",
     temperature: "Hot",
     milk: "Whole",
     roast: "Medium",
@@ -19,8 +19,15 @@ export default function CustomizeModal({ item, onClose }) {
     setSelections(prev => ({ ...prev, [key]: value }));
   };
 
+  const sizeAdditions = {
+    Small: 0,
+    Medium: 0.50,
+    Large: 1.00
+  };
+  const currentItemPrice = item.price + (sizeAdditions[selections.size] || 0);
+
   const handleAdd = () => {
-    addToCart(item, selections, quantity);
+    addToCart({ ...item, price: currentItemPrice }, selections, quantity);
     onClose();
   };
 
@@ -51,6 +58,26 @@ export default function CustomizeModal({ item, onClose }) {
                   </button>
                 ))}
               </div>
+              
+              {key === 'size' && selections.size && (
+                <div className="option-detail-container">
+                  <div key={selections.size} className="slide-down-fade">
+                    {selections.size === 'Small' && '8oz'}
+                    {selections.size === 'Medium' && '9oz'}
+                    {selections.size === 'Large' && '10oz'}
+                  </div>
+                </div>
+              )}
+
+              {key === 'sweetness' && selections.sweetness !== 'None' && (
+                <div className="option-detail-container">
+                  <div key={selections.sweetness} className="slide-down-fade">
+                    {selections.sweetness === 'Light' && '1 oz (creamer)'}
+                    {selections.sweetness === 'Medium' && '2 oz (creamer)'}
+                    {selections.sweetness === 'Extra Sweet' && '3 oz (creamer)'}
+                  </div>
+                </div>
+              )}
             </div>
           ))}
 
@@ -73,7 +100,7 @@ export default function CustomizeModal({ item, onClose }) {
         <div className="modal-footer">
           <div className="price-total">
             <span className="label">Total</span>
-            <span className="value">${(item.price * quantity).toFixed(2)}</span>
+            <span key={currentItemPrice} className="value price-pop">${(currentItemPrice * quantity).toFixed(2)}</span>
           </div>
           <button className="add-to-cart-btn" onClick={handleAdd}>
             Add to Cart

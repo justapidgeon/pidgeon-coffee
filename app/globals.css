@@ -303,6 +303,18 @@ button {
 .option-group { margin-bottom: 1.5rem; }
 .option-label { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.75rem; font-family: var(--font-body); text-transform: uppercase; letter-spacing: 0.05em; }
 .option-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.option-detail-container { overflow: hidden; }
+@keyframes slideDownFade {
+  0% { opacity: 0; transform: translateY(-10px); max-height: 0; margin-top: 0; }
+  100% { opacity: 1; transform: translateY(0); max-height: 40px; margin-top: 0.5rem; }
+}
+.slide-down-fade { animation: slideDownFade 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; color: var(--accent); font-size: 0.85rem; font-weight: 600; font-style: italic; padding-left: 0.5rem; }
+@keyframes popPrice {
+  0% { transform: scale(1); color: var(--text); }
+  50% { transform: scale(1.15); color: var(--accent); }
+  100% { transform: scale(1); color: var(--text); }
+}
+.price-pop { display: inline-block; animation: popPrice 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 .pill { padding: 0.5rem 1rem; border: 1px solid var(--border); border-radius: 50px; font-size: 0.9rem; transition: var(--transition); }
 .pill.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
 .pill:hover:not(.active) { border-color: var(--accent); }
