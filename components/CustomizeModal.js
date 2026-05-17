@@ -53,7 +53,14 @@ export default function CustomizeModal({ item, onClose }) {
     const filteredSelections = {};
     Object.keys(selections).forEach(key => {
       if (!item.allowedOptions || item.allowedOptions.includes(key)) {
-        filteredSelections[key] = selections[key];
+        let value = selections[key];
+        if (key === 'size') {
+          value = `${value} (${currentSizeOz}oz)`;
+        } else if (key === 'sweetness' && value !== 'None') {
+          const sweetOz = value === 'Light' ? '1 oz' : value === 'Medium' ? '2 oz' : '3 oz';
+          value = `${value} (${sweetOz})`;
+        }
+        filteredSelections[key] = value;
       }
     });
 
