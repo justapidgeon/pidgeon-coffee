@@ -9,22 +9,29 @@ export default function CheckoutPage() {
   const { cartItems, clearCart } = useCart();
   const [isOrdering, setIsOrdering] = useState(false);
   const [isOrdered, setIsOrdered] = useState(false);
+  const [orderName, setOrderName] = useState("");
 
   const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const total = subtotal.toFixed(2);
 
   const handleCompleteOrder = async () => {
+    if (!orderName.trim()) {
+      alert("Please enter a name for the order.");
+      return;
+    }
+
     setIsOrdering(true);
     
     // 1. Fire notification
     await sendOrderNotification({
       items: cartItems,
-      total: total
+      total: total,
+      orderName: orderName.trim()
     });
 
     // 2. Clear cart and show success state (locally)
     // In a real app, you might wait for Venmo success, but here we redirect immediately.
-    const orderNote = `Pidgeon Coffee Order: ${cartItems.map(i => i.name).join(", ")}`;
+    const orderNote = `Pidgeon Coffee Order (${orderName.trim()}): ${cartItems.map(i => i.name).join(", ")}`;
     const venmoUrl = `venmo://paycharge?txn=pay&recipients=justapidgeon&amount=${total}&note=${encodeURIComponent(orderNote)}`;
 
     // 3. Clear cart
@@ -88,6 +95,19 @@ export default function CheckoutPage() {
                   ))}
                 </div>
 
+                <div className="order-name-section">
+                  <label htmlFor="order-name" className="order-name-label">Name for this Order</label>
+                  <input
+                    id="order-name"
+                    type="text"
+                    placeholder="Enter your name (e.g., Alex / Table 4)"
+                    value={orderName}
+                    onChange={(e) => setOrderName(e.target.value)}
+                    className="order-name-input"
+                    maxLength={50}
+                  />
+                </div>
+
                 <div className="checkout-totals">
                   <div className="total-row">
                     <span>Subtotal</span>
@@ -107,7 +127,7 @@ export default function CheckoutPage() {
                 <button 
                   onClick={handleCompleteOrder} 
                   className="complete-order-btn"
-                  disabled={isOrdering}
+                  disabled={isOrdering || !orderName.trim()}
                 >
                   {isOrdering ? "Initiating..." : "Complete Order & Pay"}
                 </button>
