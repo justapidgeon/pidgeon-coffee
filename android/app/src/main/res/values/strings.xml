@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">pidgeon coffee</string>
+    <string name="title_activity_main">pidgeon coffee</string>
+    <string name="package_name">com.pidgeoncoffee.app</string>
+    <string name="custom_url_scheme">com.pidgeoncoffee.app</string>
+</resources>
