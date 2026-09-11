@@ -32,21 +32,32 @@ export default function CartSidebar() {
             <div className="cart-items">
               {cartItems.map((item) => (
                 <div key={item.cartId} className="cart-item">
-                  <div className="cart-item-header">
-                    <h3 className="item-name">{item.name}</h3>
-                    <button 
-                      className="remove-btn"
-                      onClick={() => removeFromCart(item.cartId)}
-                    >
-                      Remove
-                    </button>
+                  <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                    {item.image && (
+                      <img 
+                        src={item.image} 
+                        alt={item.name} 
+                        style={{ width: '48px', height: '48px', objectFit: 'contain', background: 'var(--surface)', borderRadius: '10px', padding: '4px', border: '1px solid var(--border)', flexShrink: 0 }} 
+                      />
+                    )}
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div className="cart-item-header">
+                        <h3 className="item-name">{item.name}</h3>
+                        <button 
+                          className="remove-btn"
+                          onClick={() => removeFromCart(item.cartId)}
+                        >
+                          Remove
+                        </button>
+                      </div>
+                      
+                      <ul className="item-customizations">
+                        {Object.entries(item.customizations).map(([key, val]) => (
+                          <li key={key}>{key}: {val}</li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
-                  
-                  <ul className="item-customizations">
-                    {Object.entries(item.customizations).map(([key, val]) => (
-                      <li key={key}>{key}: {val}</li>
-                    ))}
-                  </ul>
 
                   <div className="cart-item-footer">
                     <div className="qty-controls">

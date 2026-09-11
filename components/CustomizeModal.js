@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { customizationOptions } from "../data/menu";
+import { customizationOptions, getDrinkImageUrl } from "../data/menu";
 import { useCart } from "../context/CartContext";
 
 export default function CustomizeModal({ item, onClose }) {
@@ -9,11 +9,32 @@ export default function CustomizeModal({ item, onClose }) {
   const [selections, setSelections] = useState({
     size: "Small",
     temperature: "Hot",
-    milk: "Whole",
+    milk: item.defaultMilk || (item.allowedOptions?.includes("milk") ? "Whole" : "None"),
     roast: "Medium",
     sweetness: "None"
   });
   const [quantity, setQuantity] = useState(1);
+
+  // Dynamic image calculation
+  const targetImageUrl = getDrinkImageUrl(item, selections) || item.image;
+  const [displayedImage, setDisplayedImage] = useState(targetImageUrl);
+  const [isFading, setIsFading] = useState(false);
+
+  useEffect(() => {
+    if (targetImageUrl === displayedImage) return;
+
+    setIsFading(true);
+    const img = new Image();
+    img.src = targetImageUrl;
+    img.onload = () => {
+      setDisplayedImage(targetImageUrl);
+      setIsFading(false);
+    };
+    img.onerror = () => {
+      setDisplayedImage(targetImageUrl);
+      setIsFading(false);
+    };
+  }, [targetImageUrl, displayedImage]);
 
   const handleSelection = (key, value) => {
     setSelections(prev => ({ ...prev, [key]: value }));
@@ -64,9 +85,16 @@ export default function CustomizeModal({ item, onClose }) {
       }
     });
 
-    addToCart({ ...item, price: currentItemPrice }, filteredSelections, quantity);
+    addToCart({ ...item, price: currentItemPrice, image: displayedImage }, filteredSelections, quantity);
     onClose();
   };
+
+  // Preview badge pills indicating currently active attributes
+  const previewBadges = [];
+  if (selections.size) previewBadges.push(selections.size);
+  if (item.allowedOptions?.includes("temperature")) previewBadges.push(selections.temperature);
+  if (item.allowedOptions?.includes("roast")) previewBadges.push(`${selections.roast} Roast`);
+  if (item.allowedOptions?.includes("milk") && selections.milk !== "None") previewBadges.push(`${selections.milk} Milk`);
 
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -80,54 +108,78 @@ export default function CustomizeModal({ item, onClose }) {
           <button className="close-btn" onClick={onClose}>&times;</button>
         </div>
 
+        {/* Dynamic Drink Image Preview Showcase */}
+        <div className="drink-preview-card">
+          <div className="drink-preview-glow" />
+          <img 
+            src={displayedImage} 
+            alt={item.name} 
+            className={`modal-drink-img ${isFading ? 'fade-out' : 'fade-in'}`}
+            onError={(e) => {
+              if (e.target.src !== item.image) {
+                e.target.src = item.image;
+              }
+            }}
+          />
+          {previewBadges.length > 0 && (
+            <div className="drink-preview-badge">
+              {previewBadges.join(" • ")}
+            </div>
+          )}
+        </div>
+
         <div className="modal-body">
           {Object.entries(customizationOptions)
             .filter(([key]) => !item.allowedOptions || item.allowedOptions.includes(key))
-            .map(([key, options]) => (
-            <div key={key} className="option-group">
-              <h4 className="option-label">{key.charAt(0).toUpperCase() + key.slice(1)}</h4>
-              <div className="option-pills">
-                {options.map(option => {
-                  let isDisabled = false;
-                  if (key === "sweetness" && option !== "None") {
-                    if (sweetnessVolumes[option] > availableRoom) {
-                      isDisabled = true;
-                    }
-                  }
+            .map(([key, defaultOptions]) => {
+              const options = (key === 'milk' && item.milkOptions) ? item.milkOptions : defaultOptions;
 
-                  return (
-                    <button
-                      key={option}
-                      className={`pill ${selections[key] === option ? 'active' : ''}`}
-                      onClick={() => !isDisabled && handleSelection(key, option)}
-                      style={isDisabled ? { opacity: 0.3, cursor: 'not-allowed', textDecoration: 'line-through' } : {}}
-                      disabled={isDisabled}
-                    >
-                      {option}
-                    </button>
-                  );
-                })}
-              </div>
-              
-              {key === 'size' && selections.size && (
-                <div className="option-detail-container">
-                  <div key={selections.size} className="slide-down-fade">
-                    {currentSizeOz}oz
-                  </div>
-                </div>
-              )}
+              return (
+                <div key={key} className="option-group">
+                  <h4 className="option-label">{key.charAt(0).toUpperCase() + key.slice(1)}</h4>
+                  <div className="option-pills">
+                    {options.map(option => {
+                      let isDisabled = false;
+                      if (key === "sweetness" && option !== "None") {
+                        if (sweetnessVolumes[option] > availableRoom) {
+                          isDisabled = true;
+                        }
+                      }
 
-              {key === 'sweetness' && selections.sweetness !== 'None' && (
-                <div className="option-detail-container">
-                  <div key={selections.sweetness} className="slide-down-fade">
-                    {selections.sweetness === 'Light' && '1 oz (creamer)'}
-                    {selections.sweetness === 'Medium' && '2 oz (creamer)'}
-                    {selections.sweetness === 'Extra Sweet' && '3 oz (creamer)'}
+                      return (
+                        <button
+                          key={option}
+                          className={`pill ${selections[key] === option ? 'active' : ''}`}
+                          onClick={() => !isDisabled && handleSelection(key, option)}
+                          style={isDisabled ? { opacity: 0.3, cursor: 'not-allowed', textDecoration: 'line-through' } : {}}
+                          disabled={isDisabled}
+                        >
+                          {option}
+                        </button>
+                      );
+                    })}
                   </div>
+                  
+                  {key === 'size' && selections.size && (
+                    <div className="option-detail-container">
+                      <div key={selections.size} className="slide-down-fade">
+                        {currentSizeOz}oz
+                      </div>
+                    </div>
+                  )}
+
+                  {key === 'sweetness' && selections.sweetness !== 'None' && (
+                    <div className="option-detail-container">
+                      <div key={selections.sweetness} className="slide-down-fade">
+                        {selections.sweetness === 'Light' && '1 oz (creamer)'}
+                        {selections.sweetness === 'Medium' && '2 oz (creamer)'}
+                        {selections.sweetness === 'Extra Sweet' && '3 oz (creamer)'}
+                      </div>
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-          ))}
+              );
+            })}
 
           <div className="quantity-section">
             <h4 className="option-label">Quantity</h4>

@@ -81,7 +81,14 @@ export default function CheckoutPage() {
                 <div className="order-items-list">
                   {cartItems.map((item) => (
                     <div key={item.cartId} className="checkout-item">
-                      <div className="item-info">
+                      <div className="item-info" style={{ display: 'flex', alignItems: 'center' }}>
+                        {item.image && (
+                          <img 
+                            src={item.image} 
+                            alt={item.name} 
+                            style={{ width: '44px', height: '44px', objectFit: 'contain', background: 'rgba(255,255,255,0.03)', borderRadius: '8px', padding: '3px', border: '1px solid var(--border)', flexShrink: 0, marginRight: '10px' }} 
+                          />
+                        )}
                         <span className="item-qty">{item.quantity}x</span>
                         <div className="item-name-group">
                           <h3>{item.name}</h3>
