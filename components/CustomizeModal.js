@@ -17,24 +17,37 @@ export default function CustomizeModal({ item, onClose }) {
 
   // Dynamic image calculation
   const targetImageUrl = getDrinkImageUrl(item, selections) || item.image;
-  const [displayedImage, setDisplayedImage] = useState(targetImageUrl);
-  const [isFading, setIsFading] = useState(false);
+  const isMilkNone = item.allowedOptions?.includes("milk") && selections.milk === "None";
 
+  // Preload all combinations for this drink on mount so switches are instantaneous
   useEffect(() => {
-    if (targetImageUrl === displayedImage) return;
+    if (!item) return;
+    const sizes = customizationOptions.size;
+    const roasts = item.allowedOptions?.includes("roast") ? customizationOptions.roast : ["Medium"];
+    const temps = item.allowedOptions?.includes("temperature") ? customizationOptions.temperature : ["Hot"];
+    const milks = item.allowedOptions?.includes("milk") ? (item.milkOptions || customizationOptions.milk) : ["None"];
 
-    setIsFading(true);
-    const img = new Image();
-    img.src = targetImageUrl;
-    img.onload = () => {
-      setDisplayedImage(targetImageUrl);
-      setIsFading(false);
-    };
-    img.onerror = () => {
-      setDisplayedImage(targetImageUrl);
-      setIsFading(false);
-    };
-  }, [targetImageUrl, displayedImage]);
+    sizes.forEach(s => {
+      roasts.forEach(r => {
+        temps.forEach(t => {
+          milks.forEach(m => {
+            const url = getDrinkImageUrl(item, { size: s, roast: r, temperature: t, milk: m });
+            if (url) {
+              const img = new Image();
+              img.src = url;
+            }
+          });
+        });
+      });
+    });
+  }, [item]);
+
+  // If milk is set to None, reset sweetness to None
+  useEffect(() => {
+    if (isMilkNone && selections.sweetness !== "None") {
+      setSelections(prev => ({ ...prev, sweetness: "None" }));
+    }
+  }, [isMilkNone, selections.sweetness]);
 
   const handleSelection = (key, value) => {
     setSelections(prev => ({ ...prev, [key]: value }));
@@ -85,7 +98,7 @@ export default function CustomizeModal({ item, onClose }) {
       }
     });
 
-    addToCart({ ...item, price: currentItemPrice, image: displayedImage }, filteredSelections, quantity);
+    addToCart({ ...item, price: currentItemPrice, image: targetImageUrl }, filteredSelections, quantity);
     onClose();
   };
 
@@ -112,9 +125,10 @@ export default function CustomizeModal({ item, onClose }) {
         <div className="drink-preview-card">
           <div className="drink-preview-glow" />
           <img 
-            src={displayedImage} 
+            src={targetImageUrl} 
             alt={item.name} 
-            className={`modal-drink-img ${isFading ? 'fade-out' : 'fade-in'}`}
+            className="modal-drink-img"
+            decoding="async"
             onError={(e) => {
               if (e.target.src !== item.image) {
                 e.target.src = item.image;
@@ -141,7 +155,7 @@ export default function CustomizeModal({ item, onClose }) {
                     {options.map(option => {
                       let isDisabled = false;
                       if (key === "sweetness" && option !== "None") {
-                        if (sweetnessVolumes[option] > availableRoom) {
+                        if (isMilkNone || sweetnessVolumes[option] > availableRoom) {
                           isDisabled = true;
                         }
                       }
@@ -151,7 +165,7 @@ export default function CustomizeModal({ item, onClose }) {
                           key={option}
                           className={`pill ${selections[key] === option ? 'active' : ''}`}
                           onClick={() => !isDisabled && handleSelection(key, option)}
-                          style={isDisabled ? { opacity: 0.3, cursor: 'not-allowed', textDecoration: 'line-through' } : {}}
+                          style={isDisabled ? { opacity: 0.28, cursor: 'not-allowed', textDecoration: 'line-through' } : {}}
                           disabled={isDisabled}
                         >
                           {option}
@@ -160,6 +174,12 @@ export default function CustomizeModal({ item, onClose }) {
                     })}
                   </div>
                   
+                  {key === 'sweetness' && isMilkNone && (
+                    <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.5rem', fontStyle: 'italic' }}>
+                      Choose Whole or Oat milk to add sweetness.
+                    </p>
+                  )}
+
                   {key === 'size' && selections.size && (
                     <div className="option-detail-container">
                       <div key={selections.size} className="slide-down-fade">
