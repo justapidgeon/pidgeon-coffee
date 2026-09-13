@@ -1409,24 +1409,42 @@ button {
 }
 
 @media (max-width: 899px) {
-  .modal-content.has-dossier {
-    overflow: hidden;
+  /* On phone/mobile, render the bean profile card IN PLACE of the customization popup */
+  .modal-content.has-dossier .modal-customization-pane {
+    display: none !important;
   }
+
   .modal-content.has-dossier .bean-dossier-pane {
-    position: absolute;
-    inset: 0;
-    z-index: 50;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    border-radius: inherit;
-    background: var(--surface);
-    padding: 1.15rem 1rem 1.5rem;
-    animation: slideUp 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    position: static;
+    inset: auto;
+    z-index: auto;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+    overflow-y: visible;
+    animation: fadeIn 0.2s ease-out;
   }
+
   .dossier-back-mobile {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 5px;
+    background: rgba(200, 149, 108, 0.12);
+    border: 1px solid rgba(200, 149, 108, 0.3);
+    color: var(--accent);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .dossier-back-mobile:hover {
+    background: var(--accent);
+    color: var(--bg);
   }
 }
 

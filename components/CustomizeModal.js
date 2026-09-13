@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { customizationOptions, getDrinkImageUrl, coffeeBeans } from "../data/menu";
 import { useCart } from "../context/CartContext";
 
 export default function CustomizeModal({ item, onClose }) {
   const { addToCart } = useCart();
+  const modalContentRef = useRef(null);
   const [selections, setSelections] = useState({
     size: "Small",
     temperature: "Hot",
@@ -15,6 +16,13 @@ export default function CustomizeModal({ item, onClose }) {
   });
   const [quantity, setQuantity] = useState(1);
   const [inspectingBean, setInspectingBean] = useState(null);
+
+  // Scroll modal to top when switching between customizer and bean profile
+  useEffect(() => {
+    if (modalContentRef.current) {
+      modalContentRef.current.scrollTop = 0;
+    }
+  }, [inspectingBean]);
 
   // Dynamic image calculation
   const targetImageUrl = getDrinkImageUrl(item, selections) || item.image;
@@ -114,6 +122,7 @@ export default function CustomizeModal({ item, onClose }) {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div 
+        ref={modalContentRef}
         className={`modal-content ${inspectingBean ? 'has-dossier' : ''}`} 
         onClick={(e) => e.stopPropagation()}
       >
@@ -500,12 +509,15 @@ export default function CustomizeModal({ item, onClose }) {
                 className={`dossier-equip-btn ${selections.bean === inspectingBean.name ? 'equipped' : ''}`}
                 onClick={() => {
                   handleSelection('bean', inspectingBean.name);
+                  if (typeof window !== 'undefined' && window.innerWidth < 900) {
+                    setInspectingBean(null);
+                  }
                 }}
               >
                 {selections.bean === inspectingBean.name ? (
-                  <span>✓ Selected for this Drink</span>
+                  <span>✓ Selected (Return to Drink)</span>
                 ) : (
-                  <span>Select {inspectingBean.name}</span>
+                  <span>Select {inspectingBean.name} & Return</span>
                 )}
               </button>
             </div>
