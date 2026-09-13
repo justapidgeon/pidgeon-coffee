@@ -20,40 +20,18 @@ export default function CustomizeModal({ item, onClose }) {
   const targetImageUrl = getDrinkImageUrl(item, selections) || item.image;
   const isMilkNone = item.allowedOptions?.includes("milk") && selections.milk === "None";
 
-  // Preload relevant drink combinations with a delay to keep modal animations at 60fps
+  // Preload variations once on modal mount without re-running on clicks
   useEffect(() => {
     if (!item) return;
-    const timer = setTimeout(() => {
-      const roasts = item.allowedOptions?.includes("bean")
-        ? [...new Set(coffeeBeans.map(b => b.imageRoast))]
-        : (item.allowedOptions?.includes("roast") ? customizationOptions.roast : ["Medium"]);
-      const temps = item.allowedOptions?.includes("temperature") ? ["Hot", "Iced"] : ["Hot"];
-      const milk = selections.milk || "None";
-
-      roasts.forEach(r => {
-        temps.forEach(t => {
-          const url = getDrinkImageUrl(item, { size: selections.size, roast: r, temperature: t, milk });
-          if (url) {
-            const img = new Image();
-            img.src = url;
-          }
-        });
-      });
-    }, 200);
-
-    return () => clearTimeout(timer);
-  }, [item, selections.size, selections.milk]);
-
-  // If milk is set to None, reset sweetness to None
-  useEffect(() => {
-    if (isMilkNone && selections.sweetness !== "None") {
-      setSelections(prev => ({ ...prev, sweetness: "None" }));
-    }
-  }, [isMilkNone, selections.sweetness]);
-
-  const handleSelection = (key, value) => {
-    setSelections(prev => ({ ...prev, [key]: value }));
-  };
+    const roasts = ["Light", "Medium", "Dark"];
+    roasts.forEach(r => {
+      const url = getDrinkImageUrl(item, { size: "Small", roast: r, temperature: "Hot", milk: "None" });
+      if (url) {
+        const img = new Image();
+        img.src = url;
+      }
+    });
+  }, [item?.id]);
 
   const sizeAdditions = {
     Small: 0,
@@ -74,16 +52,29 @@ export default function CustomizeModal({ item, onClose }) {
     "Extra Sweet": 3
   };
 
-  useEffect(() => {
-    if (selections.sweetness !== "None") {
-      if (sweetnessVolumes[selections.sweetness] > availableRoom) {
-        let newSweetness = "None";
-        if (availableRoom >= 2) newSweetness = "Medium";
-        else if (availableRoom >= 1) newSweetness = "Light";
-        setSelections(prev => ({ ...prev, sweetness: newSweetness }));
+  const handleSelection = (key, value) => {
+    setSelections(prev => {
+      const next = { ...prev, [key]: value };
+
+      // Synchronous constraint: If milk is set to None, reset sweetness to None
+      if (key === "milk" && value === "None") {
+        next.sweetness = "None";
       }
-    }
-  }, [selections.size, availableRoom, selections.sweetness]);
+
+      // Synchronous constraint: If size changed, clamp sweetness if it exceeds room
+      if (key === "size") {
+        const newSizeOz = baseSizeOz + (sizeOffsets[value] || 0);
+        const newAvailableRoom = newSizeOz - 2;
+        if (next.sweetness !== "None" && sweetnessVolumes[next.sweetness] > newAvailableRoom) {
+          if (newAvailableRoom >= 2) next.sweetness = "Medium";
+          else if (newAvailableRoom >= 1) next.sweetness = "Light";
+          else next.sweetness = "None";
+        }
+      }
+
+      return next;
+    });
+  };
 
   const handleAdd = () => {
     const filteredSelections = {};
@@ -168,7 +159,6 @@ export default function CustomizeModal({ item, onClose }) {
                     <div key="bean" className="option-group bean-option-group">
                       <div className="option-label-row">
                         <h4 className="option-label">Coffee Bean Selection</h4>
-                        <span className="option-label-hint">Tap + for bean stat sheet</span>
                       </div>
                       
                       <div className="bean-selector-grid">
