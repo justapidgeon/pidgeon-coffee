@@ -20,30 +20,29 @@ export default function CustomizeModal({ item, onClose }) {
   const targetImageUrl = getDrinkImageUrl(item, selections) || item.image;
   const isMilkNone = item.allowedOptions?.includes("milk") && selections.milk === "None";
 
-  // Preload all combinations for this drink on mount so switches are instantaneous
+  // Preload relevant drink combinations with a delay to keep modal animations at 60fps
   useEffect(() => {
     if (!item) return;
-    const sizes = customizationOptions.size;
-    const roasts = item.allowedOptions?.includes("bean")
-      ? [...new Set(coffeeBeans.map(b => b.imageRoast))]
-      : (item.allowedOptions?.includes("roast") ? customizationOptions.roast : ["Medium"]);
-    const temps = item.allowedOptions?.includes("temperature") ? customizationOptions.temperature : ["Hot"];
-    const milks = item.allowedOptions?.includes("milk") ? (item.milkOptions || customizationOptions.milk) : ["None"];
+    const timer = setTimeout(() => {
+      const roasts = item.allowedOptions?.includes("bean")
+        ? [...new Set(coffeeBeans.map(b => b.imageRoast))]
+        : (item.allowedOptions?.includes("roast") ? customizationOptions.roast : ["Medium"]);
+      const temps = item.allowedOptions?.includes("temperature") ? ["Hot", "Iced"] : ["Hot"];
+      const milk = selections.milk || "None";
 
-    sizes.forEach(s => {
       roasts.forEach(r => {
         temps.forEach(t => {
-          milks.forEach(m => {
-            const url = getDrinkImageUrl(item, { size: s, roast: r, temperature: t, milk: m });
-            if (url) {
-              const img = new Image();
-              img.src = url;
-            }
-          });
+          const url = getDrinkImageUrl(item, { size: selections.size, roast: r, temperature: t, milk });
+          if (url) {
+            const img = new Image();
+            img.src = url;
+          }
         });
       });
-    });
-  }, [item]);
+    }, 200);
+
+    return () => clearTimeout(timer);
+  }, [item, selections.size, selections.milk]);
 
   // If milk is set to None, reset sweetness to None
   useEffect(() => {

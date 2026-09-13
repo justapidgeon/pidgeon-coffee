@@ -451,25 +451,25 @@ button {
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.035);
   border: 1px solid var(--border);
   border-radius: 14px;
   padding: 0.65rem 0.85rem;
   cursor: pointer;
-  transition: var(--transition);
-  backdrop-filter: blur(6px);
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+  transform: translateZ(0);
 }
 
 .bean-card:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.07);
   border-color: rgba(200, 149, 108, 0.4);
   transform: translateY(-1px);
 }
 
 .bean-card.active {
-  background: rgba(200, 149, 108, 0.12);
+  background: rgba(200, 149, 108, 0.14);
   border-color: var(--accent);
-  box-shadow: 0 0 16px rgba(200, 149, 108, 0.2);
+  box-shadow: 0 0 14px rgba(200, 149, 108, 0.2);
 }
 
 .bean-card-left {
@@ -624,8 +624,7 @@ button {
 
 /* Professional Specialty Coffee Profile Card */
 .bean-dossier-pane {
-  background: rgba(18, 15, 13, 0.96);
-  backdrop-filter: blur(24px);
+  background: rgba(18, 15, 13, 0.98);
   border: 1px solid rgba(200, 149, 108, 0.22);
   border-radius: 20px;
   padding: 1.5rem;
@@ -633,6 +632,7 @@ button {
   flex-direction: column;
   gap: 1.25rem;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+  transform: translateZ(0);
 }
 
 .dossier-header {
