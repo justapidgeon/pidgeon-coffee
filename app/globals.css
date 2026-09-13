@@ -532,6 +532,18 @@ button {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: inline-flex;
+  align-items: center;
+  gap: 3.5px;
+}
+
+.bean-pin-icon {
+  width: 11px;
+  height: 11px;
+  color: var(--accent);
+  flex-shrink: 0;
+  display: inline-block;
+  opacity: 0.9;
 }
 
 .bean-dot {
