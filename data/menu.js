@@ -114,10 +114,14 @@ export const coffeeBeans = [
     imageRoast: "Medium",
     roastLevel: 3,
     tier: "Micro-Lot Varietal",
-    tagline: "Rare Colombian Pink Bourbon with raw honey and delicate floral notes",
+    tagline: "Sustainably partnered Colombian micro-lots with certified farm traceability",
     notes: ["Pink Bourbon", "Honey", "Floral"],
     logo: "/Coffee Bean Brands/El Origen.png",
-    description: "A prestigious micro-lot from the misty Colombian Andes featuring the celebrated Pink Bourbon varietal. Celebrated for its perfume-like floral aromatics, silky honey nectar, and soft stone fruit.",
+    description: "Partnering hand-in-hand with producing families across Tolima, Huila, Caldas, and Nariño. Origen Coffee guarantees certified traceability from cultivation to cup, delivering exceptional Colombian specialty coffee with fresh, unmatched flavor profiles.",
+    links: [
+      { label: "@origencoffeefarms", url: "https://www.instagram.com/origencoffeefarms/", type: "instagram" },
+      { label: "Da Vida Shop", url: "https://da-vida-co.myshopify.com", type: "website" }
+    ],
     stats: {
       acidity: 84,
       sweetness: 92,
@@ -135,10 +139,13 @@ export const coffeeBeans = [
     imageRoast: "Medium",
     roastLevel: 3,
     tier: "High-Altitude Artisan",
-    tagline: "Rocky Mountain craft roaster celebrated for velvety macadamia sweetness",
+    tagline: "Boulder craft roasters sourcing direct-trade coffees on vintage Probat drums",
     notes: ["Hazelnut", "Sweet Almond", "Macadamia Nut"],
     logo: "/Coffee Bean Brands/Boxcar.png",
-    description: "Roasted at 5,430 feet in Boulder, Colorado. Boxcar coaxes out indulgent buttery macadamia nut, sweet toasted almond, and warm hazelnut cream for a supremely comforting, rounded profile.",
+    description: "Founded in 2010 by Vajra and Cara Rich in Boulder, CO. Boxcar sources directly from Mauricio Salaverria at Divisadero Farms in El Salvador—paying well above Fair Trade rates—and roasts on vintage modified Probat drum roasters for an exceptionally sweet, rich cup.",
+    links: [
+      { label: "boxcarcoffee.com", url: "https://www.boxcarcoffee.com", type: "website" }
+    ],
     stats: {
       acidity: 62,
       sweetness: 84,
@@ -156,10 +163,13 @@ export const coffeeBeans = [
     imageRoast: "Medium",
     roastLevel: 3,
     tier: "Celtic Heritage Blend",
-    tagline: "Artisan Wicklow roastery creating deep toffee, caramel, and chocolate richness",
+    tagline: "Award-winning family artisan roastery crafted in County Wicklow, Ireland",
     notes: ["Toffee", "Caramel", "Chocolate"],
     logo: "/Coffee Bean Brands/Brady's.png",
-    description: "Small-batch roasted by family artisans in scenic Wicklow, Ireland. Seamlessly marries full-bodied Brazilian crema, Colombian cane sweetness, and decadent Guatemalan chocolate fudge.",
+    description: "An award-winning, family-run artisan roastery founded in 2017 in County Wicklow, Ireland. Brady's specializes in ethically sourced, small-batch roasted coffees, celebrated internationally for Irish craft, sustainability, and signature whiskey barrel-aged profiles.",
+    links: [
+      { label: "bradyscoffee.ie", url: "https://bradyscoffee.ie", type: "website" }
+    ],
     stats: {
       acidity: 56,
       sweetness: 88,

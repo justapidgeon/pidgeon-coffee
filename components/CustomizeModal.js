@@ -497,6 +497,36 @@ export default function CustomizeModal({ item, onClose }) {
             <div className="dossier-lore-section">
               <h4 className="dossier-section-title">ROASTER'S PROFILE & HERITAGE</h4>
               <p className="dossier-lore-text">{inspectingBean.description}</p>
+              {inspectingBean.links && inspectingBean.links.length > 0 && (
+                <div className="dossier-links-row">
+                  {inspectingBean.links.map((link, idx) => (
+                    <a
+                      key={idx}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="dossier-external-link"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      {link.type === 'instagram' ? (
+                        <svg className="link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                        </svg>
+                      ) : (
+                        <svg className="link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                          <polyline points="15 3 21 3 21 9"/>
+                          <line x1="10" y1="14" x2="21" y2="3"/>
+                        </svg>
+                      )}
+                      <span>{link.label}</span>
+                      <span className="link-arrow">↗</span>
+                    </a>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Roaster Comparison Switcher */}

@@ -989,6 +989,54 @@ button {
   line-height: 1.6;
 }
 
+.dossier-links-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.55rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid rgba(200, 149, 108, 0.12);
+}
+
+.dossier-external-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(200, 149, 108, 0.08);
+  border: 1px solid rgba(200, 149, 108, 0.25);
+  color: var(--accent);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.dossier-external-link:hover {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(200, 149, 108, 0.25);
+}
+
+.dossier-external-link .link-icon {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+.dossier-external-link .link-arrow {
+  font-size: 0.7rem;
+  line-height: 1;
+  transition: transform 0.15s ease;
+}
+
+.dossier-external-link:hover .link-arrow {
+  transform: translate(1px, -1px);
+}
+
 .dossier-switcher-section {
   display: flex;
   flex-direction: column;
