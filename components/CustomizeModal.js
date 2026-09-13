@@ -183,12 +183,13 @@ export default function CustomizeModal({ item, onClose }) {
                                 <div className="bean-card-meta">
                                   <div className="bean-name-line">
                                     <span className="bean-name">{bean.name}</span>
+                                  </div>
+                                  <div className="bean-sub-line">
+                                    <span className="bean-origin-text">📍 {bean.origin}</span>
+                                    <span className="bean-dot">•</span>
                                     <span className={`bean-roast-pill roast-${bean.roast.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}>
                                       {bean.roast}
                                     </span>
-                                  </div>
-                                  <div className="bean-origin-line">
-                                    <span>📍 {bean.origin}</span>
                                   </div>
                                 </div>
                               </div>
