@@ -117,6 +117,10 @@ export const coffeeBeans = [
     tagline: "Sustainably partnered Colombian micro-lots with certified farm traceability",
     notes: ["Pink Bourbon", "Honey", "Floral"],
     logo: "/Coffee Bean Brands/El Origen.png",
+    outOfStock: true,
+    inStock: false,
+    stockStatus: "Restocking Later This Month",
+    restockNotice: "Restocking later this month",
     description: "Partnering hand-in-hand with producing families across Tolima, Huila, Caldas, and Nariño. Origen Coffee guarantees certified traceability from cultivation to cup, delivering exceptional Colombian specialty coffee with fresh, unmatched flavor profiles.",
     links: [
       { label: "@origencoffeefarms", url: "https://www.instagram.com/origencoffeefarms/", type: "instagram" },
@@ -247,7 +251,7 @@ export const customizationOptions = {
   size: ["Small", "Medium", "Large"],
   temperature: ["Hot", "Iced"],
   milk: ["Whole", "Oat"],
-  bean: coffeeBeans.map(b => b.name),
+  bean: coffeeBeans.filter(b => !b.outOfStock).map(b => b.name),
   sweetness: ["None", "Light", "Medium", "Extra Sweet"]
 };
 
@@ -258,7 +262,7 @@ export function getDrinkImageUrl(item, selections = {}) {
 
   let roastStr = "";
   if (item.allowedOptions && item.allowedOptions.includes("bean")) {
-    const selectedBean = coffeeBeans.find(b => b.name === selections.bean) || coffeeBeans[0];
+    const selectedBean = coffeeBeans.find(b => b.name === selections.bean) || coffeeBeans.find(b => !b.outOfStock) || coffeeBeans[0];
     const imageRoast = selections.roast || selectedBean?.imageRoast || "Medium";
     roastStr = `${imageRoast.toLowerCase()} roast`;
   } else if (item.allowedOptions && item.allowedOptions.includes("roast")) {

@@ -11,7 +11,7 @@ export default function CustomizeModal({ item, onClose }) {
     size: "Small",
     temperature: "Hot",
     milk: item.defaultMilk || (item.allowedOptions?.includes("milk") ? "Whole" : "None"),
-    bean: item.allowedOptions?.includes("bean") ? coffeeBeans[0].name : undefined,
+    bean: item.allowedOptions?.includes("bean") ? (coffeeBeans.find(b => !b.outOfStock)?.name || coffeeBeans[0].name) : undefined,
     sweetness: "None"
   });
   const [quantity, setQuantity] = useState(1);
@@ -173,13 +173,20 @@ export default function CustomizeModal({ item, onClose }) {
                       <div className="bean-selector-grid">
                         {coffeeBeans.map(bean => {
                           const isSelected = selections.bean === bean.name;
+                          const isOutOfStock = Boolean(bean.outOfStock);
                           return (
                             <div 
                               key={bean.id}
-                              className={`bean-card ${isSelected ? 'active' : ''}`}
-                              onClick={() => handleSelection('bean', bean.name)}
+                              className={`bean-card ${isSelected ? 'active' : ''} ${isOutOfStock ? 'out-of-stock' : ''}`}
+                              onClick={() => {
+                                if (!isOutOfStock) {
+                                  handleSelection('bean', bean.name);
+                                }
+                              }}
                               role="button"
-                              tabIndex={0}
+                              tabIndex={isOutOfStock ? -1 : 0}
+                              aria-disabled={isOutOfStock}
+                              title={isOutOfStock ? `${bean.name} is currently out of stock (restocking soon)` : undefined}
                             >
                               <div className="bean-card-left">
                                 <div className="bean-logo-thumb">
@@ -192,28 +199,39 @@ export default function CustomizeModal({ item, onClose }) {
                                 <div className="bean-card-meta">
                                   <div className="bean-name-line">
                                     <span className="bean-name">{bean.name}</span>
+                                    {isOutOfStock && (
+                                      <span className="bean-stock-tag">
+                                        Restocking Soon
+                                      </span>
+                                    )}
                                   </div>
                                   <div className="bean-sub-line">
-                                    <span className="bean-origin-text">
-                                      <svg 
-                                        className="bean-pin-icon" 
-                                        viewBox="0 0 24 24" 
-                                        fill="none" 
-                                        stroke="currentColor" 
-                                        strokeWidth="2.2" 
-                                        strokeLinecap="round" 
-                                        strokeLinejoin="round" 
-                                        aria-hidden="true"
-                                      >
-                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                                        <circle cx="12" cy="10" r="3" />
-                                      </svg>
-                                      {bean.origin}
-                                    </span>
-                                    <span className="bean-dot">•</span>
-                                    <span className={`bean-roast-pill roast-${bean.roast.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}>
-                                      {bean.roast}
-                                    </span>
+                                    {isOutOfStock ? (
+                                      <span className="bean-restock-subtext">Restocking later this month</span>
+                                    ) : (
+                                      <>
+                                        <span className="bean-origin-text">
+                                          <svg 
+                                            className="bean-pin-icon" 
+                                            viewBox="0 0 24 24" 
+                                            fill="none" 
+                                            stroke="currentColor" 
+                                            strokeWidth="2.2" 
+                                            strokeLinecap="round" 
+                                            strokeLinejoin="round" 
+                                            aria-hidden="true"
+                                          >
+                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                                            <circle cx="12" cy="10" r="3" />
+                                          </svg>
+                                          {bean.origin}
+                                        </span>
+                                        <span className="bean-dot">•</span>
+                                        <span className={`bean-roast-pill roast-${bean.roast.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}>
+                                          {bean.roast}
+                                        </span>
+                                      </>
+                                    )}
                                   </div>
                                 </div>
                               </div>
@@ -354,6 +372,19 @@ export default function CustomizeModal({ item, onClose }) {
                 &times;
               </button>
             </div>
+
+            {/* Restock Announcement Banner */}
+            {inspectingBean.outOfStock && (
+              <div className="dossier-restock-banner">
+                <div className="dossier-restock-badge">
+                  <span className="restock-icon">⏳</span>
+                  <span>TEMPORARILY OUT OF STOCK</span>
+                </div>
+                <p className="dossier-restock-text">
+                  We ran out of <strong>{inspectingBean.name}</strong> beans for now, but fresh batches will be restocking later this month!
+                </p>
+              </div>
+            )}
 
             {/* Roaster Brand Showcase */}
             <div className="dossier-showcase-card">
@@ -537,11 +568,12 @@ export default function CustomizeModal({ item, onClose }) {
                   <button
                     key={b.id}
                     type="button"
-                    className={`switcher-bean-thumb ${inspectingBean.id === b.id ? 'active' : ''}`}
+                    className={`switcher-bean-thumb ${inspectingBean.id === b.id ? 'active' : ''} ${b.outOfStock ? 'out-of-stock' : ''}`}
                     onClick={() => setInspectingBean(b)}
-                    title={`View ${b.name} Profile`}
+                    title={`View ${b.name} Profile${b.outOfStock ? ' (Restocking Soon)' : ''}`}
                   >
                     <img src={b.logo} alt={b.name} />
+                    {b.outOfStock && <span className="switcher-stock-indicator" />}
                   </button>
                 ))}
               </div>
@@ -549,22 +581,33 @@ export default function CustomizeModal({ item, onClose }) {
 
             {/* Action Footer */}
             <div className="dossier-action-footer">
-              <button
-                type="button"
-                className={`dossier-equip-btn ${selections.bean === inspectingBean.name ? 'equipped' : ''}`}
-                onClick={() => {
-                  handleSelection('bean', inspectingBean.name);
-                  if (typeof window !== 'undefined' && window.innerWidth < 900) {
-                    setInspectingBean(null);
-                  }
-                }}
-              >
-                {selections.bean === inspectingBean.name ? (
-                  <span>✓ Selected (Return to Drink)</span>
-                ) : (
-                  <span>Select {inspectingBean.name} & Return</span>
-                )}
-              </button>
+              {inspectingBean.outOfStock ? (
+                <button
+                  type="button"
+                  className="dossier-equip-btn disabled"
+                  disabled
+                  title={`${inspectingBean.name} is currently out of stock`}
+                >
+                  <span>Out of Stock (Restocking Later This Month)</span>
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className={`dossier-equip-btn ${selections.bean === inspectingBean.name ? 'equipped' : ''}`}
+                  onClick={() => {
+                    handleSelection('bean', inspectingBean.name);
+                    if (typeof window !== 'undefined' && window.innerWidth < 900) {
+                      setInspectingBean(null);
+                    }
+                  }}
+                >
+                  {selections.bean === inspectingBean.name ? (
+                    <span>✓ Selected (Return to Drink)</span>
+                  ) : (
+                    <span>Select {inspectingBean.name} & Return</span>
+                  )}
+                </button>
+              )}
             </div>
           </aside>
         )}
