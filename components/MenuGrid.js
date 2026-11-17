@@ -100,6 +100,9 @@ export default function MenuGrid({ selectedBeanFilter, onClearBeanFilter }) {
                 <p className="item-desc">{item.description}</p>
                 
                 <div className="card-customization-tags">
+                  {item.allowedOptions?.includes("shot") && (
+                    <span className="card-spec-pill">Single / Double Shot</span>
+                  )}
                   {item.allowedOptions?.includes("bean") && (
                     <span className="card-spec-pill">Choice of Bean</span>
                   )}

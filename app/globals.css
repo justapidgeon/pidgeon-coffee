@@ -132,6 +132,14 @@ button {
   font-size: 0.85rem;
 }
 
+.announcement-desktop {
+  display: inline;
+}
+
+.announcement-mobile {
+  display: none;
+}
+
 .announcement-text strong {
   color: var(--accent);
   letter-spacing: 0.04em;
@@ -483,6 +491,8 @@ button {
   gap: 1.25rem;
   margin-top: 1rem;
   flex-wrap: wrap;
+  position: relative;
+  z-index: 10;
 }
 
 .cta-button {
@@ -667,6 +677,11 @@ button {
   border-radius: 14px;
   padding: 0.85rem 1rem;
   transition: var(--transition);
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  position: relative;
+  z-index: 10;
 }
 
 .roast-spotlight-item:hover {
@@ -751,6 +766,15 @@ button {
 }
 
 /* --- Section Shared Glassmorphic Classes --- */
+#beans, #menu, #about {
+  scroll-margin-top: 100px;
+}
+
+.section-header {
+  text-align: left;
+  margin-bottom: 2.5rem;
+}
+
 .section-tagline-pill {
   display: inline-flex;
   align-items: center;
@@ -773,13 +797,16 @@ button {
   color: var(--text);
   letter-spacing: -0.03em;
   margin-bottom: 0.5rem;
+  text-align: left;
 }
 
 .section-subtitle {
   color: var(--text-muted);
   font-size: 1.05rem;
-  max-width: 600px;
-  margin: 0 auto;
+  max-width: 680px;
+  margin: 0;
+  text-align: left;
+  line-height: 1.6;
 }
 
 /* --- Beans Showcase Section --- */
@@ -1294,7 +1321,7 @@ button {
 
 .menu-category-tabs {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 0.65rem;
   margin-top: 1.5rem;
   margin-bottom: 2.5rem;
@@ -1379,19 +1406,22 @@ button {
 
 .card-category-tag {
   position: absolute;
-  top: 12px;
+  top: 14px;
   left: 14px;
-  font-size: 0.62rem;
-  font-weight: 700;
+  font-size: 0.65rem;
+  font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  background: rgba(14, 11, 10, 0.7);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(213, 203, 182, 0.14);
-  color: var(--accent);
-  padding: 3px 8px;
-  border-radius: 6px;
-  z-index: 2;
+  background: rgba(18, 14, 12, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(200, 149, 108, 0.4);
+  color: #ecd5b5;
+  padding: 4px 10px;
+  border-radius: 8px;
+  z-index: 10;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
 }
 
 .card-drink-img {
@@ -1768,26 +1798,238 @@ button {
 }
 
 @media (max-width: 768px) {
+  .container {
+    padding: 0 16px;
+  }
+  
+  /* Announcement bar */
+  .announcement-bar {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.72rem;
+  }
+  .announcement-close {
+    right: 0.6rem;
+    font-size: 0.68rem;
+  }
+  
+  /* Compact phone navbar */
+  .navbar {
+    height: 64px;
+  }
+  .logo-brand {
+    gap: 8px;
+  }
+  .logo-avatar-wrap {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    padding: 2px;
+  }
+  .logo-lettermark {
+    font-size: 1.18rem;
+  }
+  .logo-subline {
+    display: none;
+  }
+  .nav-links {
+    gap: 0.65rem;
+  }
+  .nav-item-link {
+    font-size: 0.8rem;
+    padding: 4px 4px;
+  }
+  .nav-story-link {
+    display: none;
+  }
+  .nav-new-pill {
+    font-size: 0.52rem;
+    padding: 1px 4px;
+  }
+  .cart-trigger-pill {
+    padding: 6px 10px;
+    gap: 5px;
+    font-size: 0.78rem;
+  }
+  .cart-label {
+    display: none;
+  }
+  .cart-pill-count {
+    width: 17px;
+    height: 17px;
+    font-size: 0.68rem;
+  }
+
+  /* Hero phone adjustments */
   .hero {
-    padding-top: 130px;
+    padding: 105px 0 45px;
+    min-height: auto;
+  }
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .hero-content {
+    gap: 1.1rem;
+  }
+  .hero-tagline-pill {
+    font-size: 0.62rem;
+    padding: 4px 10px;
+    letter-spacing: 0.08em;
+    white-space: normal;
+  }
+  .hero-title {
+    font-size: clamp(2.2rem, 9.5vw, 3.4rem);
+    line-height: 1.08;
+  }
+  .hero-subtitle {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  .hero-perks-row {
+    gap: 0.35rem;
+  }
+  .hero-perk-pill {
+    font-size: 0.62rem;
+    padding: 4px 8px;
   }
   .hero-buttons {
     flex-direction: column;
     width: 100%;
+    gap: 0.75rem;
   }
   .cta-button {
     width: 100%;
     justify-content: center;
+    padding: 0.85rem 1.25rem;
+    font-size: 0.88rem;
   }
-  .nav-links {
-    gap: 1rem;
+  .hero-glass-card {
+    max-width: 100%;
+    padding: 1.25rem;
+    border-radius: 20px;
   }
-  .nav-item-link {
-    font-size: 0.8rem;
+  .mascot-badge-wrap {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    padding: 6px;
   }
-  .cart-trigger-pill {
-    padding: 6px 10px;
+  .mascot-brand {
+    font-size: 1.25rem;
+  }
+  .roast-spotlight-item {
+    padding: 0.75rem 0.85rem;
+  }
+
+  /* Beans section phone adjustments */
+  .beans-section {
+    padding: 55px 0 45px;
+  }
+  .featured-beans-showcase {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin-top: 1.75rem;
+  }
+  .featured-bean-card {
+    padding: 1.25rem;
+    border-radius: 20px;
+  }
+  .featured-bean-header {
+    gap: 0.85rem;
+  }
+  .bean-brand-logo-frame {
+    width: 58px;
+    height: 58px;
+    border-radius: 14px;
+  }
+  .bean-display-name {
+    font-size: 1.25rem;
+  }
+  .bean-metrics-row {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.4rem;
+    padding: 0.65rem;
+  }
+  .metric-lbl {
+    font-size: 0.55rem;
+  }
+  .featured-bean-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .action-btn {
+    width: 100%;
+    padding: 0.75rem 1rem;
+  }
+  .other-roasters-container {
+    margin-top: 2.5rem;
+  }
+  .other-roasters-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  /* Menu section phone adjustments */
+  .menu-section {
+    padding: 55px 0 45px;
+  }
+  .menu-category-tabs {
+    gap: 0.45rem;
+    margin-bottom: 1.75rem;
+  }
+  .category-tab-btn {
+    padding: 6px 14px;
     font-size: 0.78rem;
+  }
+  .menu-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  .card-image-wrap {
+    height: 170px;
+  }
+  .card-content {
+    padding: 1.15rem;
+  }
+  .item-name {
+    font-size: 1.2rem;
+  }
+
+  /* About section phone adjustments */
+  .about-section {
+    padding: 45px 0;
+  }
+  .about-glass-card {
+    padding: 1.5rem 1.15rem;
+    border-radius: 20px;
+  }
+  .about-title {
+    font-size: 1.45rem;
+  }
+  .about-desc {
+    font-size: 0.88rem;
+  }
+  .about-mascot-container {
+    width: 90px;
+    height: 90px;
+    border-radius: 20px;
+    padding: 10px;
+  }
+  .about-quote {
+    font-size: 0.95rem;
+  }
+
+  /* Footer phone adjustments */
+  .footer {
+    padding: 45px 0 25px;
+  }
+  .footer-content {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .footer-links-group {
+    flex-direction: column;
+    gap: 1.5rem;
   }
 }
 

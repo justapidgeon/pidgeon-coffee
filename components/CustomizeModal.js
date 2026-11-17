@@ -9,6 +9,7 @@ export default function CustomizeModal({ item, onClose, initialBean }) {
   const modalContentRef = useRef(null);
   const [selections, setSelections] = useState({
     size: "Small",
+    shot: item.allowedOptions?.includes("shot") ? "Double" : undefined,
     temperature: "Hot",
     milk: item.defaultMilk || (item.allowedOptions?.includes("milk") ? "Whole" : "None"),
     bean: (initialBean && coffeeBeans.some(b => b.name === initialBean && !b.outOfStock))
@@ -53,7 +54,8 @@ export default function CustomizeModal({ item, onClose, initialBean }) {
   const baseSizeOz = item.baseSize || 9;
   const sizeOffsets = { Small: -1, Medium: 0, Large: 1 };
   const currentSizeOz = baseSizeOz + (sizeOffsets[selections.size] || 0);
-  const availableRoom = currentSizeOz - 2;
+  const shotOz = selections.shot === "Single" ? 1 : 2;
+  const availableRoom = currentSizeOz - shotOz;
 
   const sweetnessVolumes = {
     "None": 0,
@@ -113,9 +115,13 @@ export default function CustomizeModal({ item, onClose, initialBean }) {
   // Preview badge pills indicating currently active attributes
   const previewBadges = [];
   if (selections.size) previewBadges.push(selections.size);
+  if (item.allowedOptions?.includes("shot") && selections.shot) {
+    previewBadges.push(`${selections.shot} Shot`);
+  }
   if (item.allowedOptions?.includes("temperature")) previewBadges.push(selections.temperature);
   if (item.allowedOptions?.includes("bean") && selections.bean) {
-    previewBadges.push(`${selections.bean} (${activeBeanObj?.roast || 'Medium'})`);
+    const beanDisplayName = activeBeanObj?.beanName ? `${activeBeanObj.name} (${activeBeanObj.beanName})` : selections.bean;
+    previewBadges.push(`${beanDisplayName} • ${activeBeanObj?.roast || 'Medium'}`);
   } else if (item.allowedOptions?.includes("roast")) {
     previewBadges.push(`${selections.roast} Roast`);
   }
@@ -201,6 +207,9 @@ export default function CustomizeModal({ item, onClose, initialBean }) {
                                 <div className="bean-card-meta">
                                   <div className="bean-name-line">
                                     <span className="bean-name">{bean.name}</span>
+                                    {bean.beanName && (
+                                      <span className="bean-varietal-subtext">• {bean.beanName}</span>
+                                    )}
                                     {isOutOfStock && (
                                       <span className="bean-stock-tag">
                                         Restocking Soon
@@ -270,9 +279,11 @@ export default function CustomizeModal({ item, onClose, initialBean }) {
 
                 const options = (key === 'milk' && item.milkOptions) ? item.milkOptions : defaultOptions;
 
+                const optionLabel = key === 'shot' ? 'Espresso Shots' : (key.charAt(0).toUpperCase() + key.slice(1));
+
                 return (
                   <div key={key} className="option-group">
-                    <h4 className="option-label">{key.charAt(0).toUpperCase() + key.slice(1)}</h4>
+                    <h4 className="option-label">{optionLabel}</h4>
                     <div className="option-pills">
                       {options.map(option => {
                         let isDisabled = false;
@@ -296,6 +307,14 @@ export default function CustomizeModal({ item, onClose, initialBean }) {
                       })}
                     </div>
                     
+                    {key === 'shot' && selections.shot && (
+                      <div className="option-detail-container">
+                        <div key={selections.shot} className="slide-down-fade">
+                          {selections.shot === 'Single' ? '1 concentrated shot (1oz espresso)' : '2 concentrated shots (2oz espresso) — standard craft pull'}
+                        </div>
+                      </div>
+                    )}
+
                     {key === 'sweetness' && isMilkNone && (
                       <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.5rem', fontStyle: 'italic' }}>
                         Choose Whole or Oat milk to add sweetness.

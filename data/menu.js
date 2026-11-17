@@ -6,7 +6,7 @@ export const menuItems = [
     description: "A concentrated shot of pure coffee essence, thick and rich with a beautiful crema.",
     category: "Hot Coffee",
     image: "/assets/menu/Espresso/medium size medium roast espresso.png",
-    allowedOptions: ["size", "bean"],
+    allowedOptions: ["size", "shot", "bean"],
     baseSize: 2
   },
   {
@@ -16,7 +16,7 @@ export const menuItems = [
     description: "A bold double shot of espresso tempered with hot water, preserving the rich crema and deep flavor.",
     category: "Hot Coffee",
     image: "/assets/menu/Americano/medium size medium roast americano.png",
-    allowedOptions: ["size", "temperature", "bean", "sweetness", "milk"],
+    allowedOptions: ["size", "shot", "temperature", "bean", "sweetness", "milk"],
     milkOptions: ["None", "Whole", "Oat"],
     defaultMilk: "None",
     baseSize: 8
@@ -28,7 +28,7 @@ export const menuItems = [
     description: "Espresso with silky steamed milk and a thin layer of luxurious micro-foam. The ultimate comfort drink.",
     category: "Hot Coffee",
     image: "/assets/menu/Latte/medium size medium roast latte.png",
-    allowedOptions: ["size", "temperature", "bean", "milk", "sweetness"],
+    allowedOptions: ["size", "shot", "temperature", "bean", "milk", "sweetness"],
     baseSize: 9
   },
   {
@@ -38,7 +38,7 @@ export const menuItems = [
     description: "Equal parts espresso, steamed milk, and thick, airy foam. A perfectly balanced textured classic.",
     category: "Hot Coffee",
     image: "/assets/menu/Cappuccino/medium size medium roast cappuccino.png",
-    allowedOptions: ["size", "temperature", "bean", "milk", "sweetness"],
+    allowedOptions: ["size", "shot", "temperature", "bean", "milk", "sweetness"],
     baseSize: 6
   },
   {
@@ -48,7 +48,7 @@ export const menuItems = [
     description: "A rich blend of espresso, steamed milk, and premium chocolate syrup, topped with whipped cream.",
     category: "Hot Coffee",
     image: "/assets/menu/Mocha/medium size medium roast mocha.png",
-    allowedOptions: ["size", "temperature", "bean", "milk", "sweetness"],
+    allowedOptions: ["size", "shot", "temperature", "bean", "milk", "sweetness"],
     baseSize: 9
   },
   {
@@ -58,7 +58,7 @@ export const menuItems = [
     description: "Ristretto espresso shots combined with micro-foamed milk for a stronger, more velvety coffee experience.",
     category: "Hot Coffee",
     image: "/assets/menu/Flat White/medium size medium roast flat white.png",
-    allowedOptions: ["size", "temperature", "bean", "milk", "sweetness"],
+    allowedOptions: ["size", "shot", "temperature", "bean", "milk", "sweetness"],
     baseSize: 6
   },
   {
@@ -68,7 +68,7 @@ export const menuItems = [
     description: "A classic espresso shot 'marked' with a dollop of frothy milk for a touch of sweetness.",
     category: "Hot Coffee",
     image: "/assets/menu/Macchiato/medium size medium roast macchiato.png",
-    allowedOptions: ["size", "temperature", "bean", "milk", "sweetness"],
+    allowedOptions: ["size", "shot", "temperature", "bean", "milk", "sweetness"],
     baseSize: 3
   },
   {
@@ -85,20 +85,23 @@ export const menuItems = [
 
 export const coffeeBeans = [
   {
-    id: "fito-montiel",
-    name: "Fito Montiel Pacamara",
+    id: "partaker",
+    name: "Partaker",
+    brand: "Partaker",
+    beanName: "Fito Montiel Pacamara",
+    varietal: "Nicaraguan Fito Montiel Pacamara",
     origin: "Metapán, El Salvador",
-    roasted: "CafeNor Carbon-Neutral Mill",
+    roasted: "Harrisburg, NC",
     roast: "Medium-Light",
     imageRoast: "Medium",
     roastLevel: 2,
-    tier: "Cup of Excellence Micro-Lot",
-    tagline: "Award-winning separation yielding playful citrus, juicy stone fruit and high sweetness",
+    tier: "Single-Origin Reserve",
+    tagline: "Partaker single-origin release: Fito Montiel Pacamara yielding playful citrus, juicy stone fruit and high sweetness",
     notes: ["Playful Citrus", "Juicy Stone Fruit", "High Sweetness"],
-    logo: "/Coffee Bean Brands/Fito Montiel Pacamara.png",
+    logo: "/Coffee Bean Brands/Partaker.png",
     inStock: true,
     outOfStock: false,
-    stockStatus: "Featured Micro-Lot",
+    stockStatus: "Featured Single-Origin",
     description: "This Pacamara separation from award-winning producer Fito Montiel yields playful citrus, juicy stone fruit and a high level of sweetness in the cup.\n\nThis is our second offering of the season from exporter CafeNor, a fully carbon neutral mill in the Metapan region of northern El Salvador owned by Alejandro and Rosa Maria Valiente. We’ve been purchasing coffee from the Valiente’s since 2022 and are proud to support their project in coffee innovation and sustainability. Second-generation coffee farmer Jose Arnulfo ‘Fito’ Montiel established his first parcel of land in the community of La Hondurita in 2000. Over the years, he’s established himself as a skilled producer, having placed twice in the El Salvador Cup of Excellence: 4th in 2006 and 2nd in 2007.\n\nFito grows Pacas, Bourbon and Gesha in addition to Pacamara and has an extensive catalog of processing protocols for washed, semi-washed, natural and honey methods. Since he operates his own wet mill and drying infrastructure, he’s also recently undertaken some experiments to see how modulating fermentation time impacts the flavor of his coffee.",
     links: [
       { label: "CafeNor Exporter Mill", url: "https://cafenor.com", type: "website" }
@@ -254,6 +257,7 @@ export const coffeeBeans = [
 
 export const customizationOptions = {
   size: ["Small", "Medium", "Large"],
+  shot: ["Single", "Double"],
   temperature: ["Hot", "Iced"],
   milk: ["Whole", "Oat"],
   bean: coffeeBeans.filter(b => !b.outOfStock).map(b => b.name),

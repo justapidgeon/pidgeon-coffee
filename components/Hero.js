@@ -85,17 +85,17 @@ export default function Hero() {
               <div className="hero-spotlight-divider" />
 
               <div className="hero-spotlights-list">
-                <div className="roast-spotlight-item highlight-lot">
+                <a href="#beans" className="roast-spotlight-item highlight-lot">
                   <div className="spotlight-left">
-                    <span className="spotlight-badge new-lot">★ FEATURED LOT</span>
-                    <span className="spotlight-name">Fito Montiel Pacamara</span>
+                    <span className="spotlight-badge new-lot">★ PARTAKER SINGLE-ORIGIN</span>
+                    <span className="spotlight-name">Partaker: Fito Montiel Pacamara</span>
                     <span className="spotlight-origin">CafeNor Mill &bull; Metapán, El Salvador</span>
                     <span className="spotlight-notes">Notes: Citrus, juicy stone fruit &amp; sweetness</span>
                   </div>
                   <div className="spotlight-arrow">↗</div>
-                </div>
+                </a>
 
-                <div className="roast-spotlight-item restocked-lot">
+                <a href="#beans" className="roast-spotlight-item restocked-lot">
                   <div className="spotlight-left">
                     <span className="spotlight-badge restock-lot">✨ BACK IN STOCK</span>
                     <span className="spotlight-name">El Origen</span>
@@ -103,7 +103,7 @@ export default function Hero() {
                     <span className="spotlight-notes">Notes: Pink Bourbon, wild honey &amp; floral</span>
                   </div>
                   <div className="spotlight-arrow">↗</div>
-                </div>
+                </a>
               </div>
 
               <div className="glass-card-footer">

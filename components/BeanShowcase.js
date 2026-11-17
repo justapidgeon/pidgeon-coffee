@@ -21,41 +21,41 @@ export default function BeanShowcase({ onSelectBeanForDrink }) {
           </p>
         </div>
 
-        {/* Featured Big Showcase Cards for Fito Montiel Pacamara & El Origen */}
+        {/* Featured Big Showcase Cards for Partaker (Fito Montiel Pacamara) & El Origen */}
         <div className="featured-beans-showcase">
-          {/* Card 1: Fito Montiel Pacamara */}
+          {/* Card 1: Partaker Brand - Fito Montiel Pacamara */}
           {(() => {
-            const fitoBean = coffeeBeans.find(b => b.id === "fito-montiel") || coffeeBeans[0];
+            const partakerBean = coffeeBeans.find(b => b.id === "partaker") || coffeeBeans[0];
             return (
-              <div className="featured-bean-card glass-spotlight" key={fitoBean.id}>
+              <div className="featured-bean-card glass-spotlight" key={partakerBean.id}>
                 <div className="card-ambient-gradient fito-gradient" />
                 <div className="card-top-badges">
-                  <span className="glass-pill-badge gold">★ CUP OF EXCELLENCE LOT</span>
-                  <span className="glass-pill-badge origin">{fitoBean.origin}</span>
+                  <span className="glass-pill-badge gold">★ PARTAKER SINGLE-ORIGIN</span>
+                  <span className="glass-pill-badge origin">{partakerBean.origin}</span>
                 </div>
 
                 <div className="featured-bean-header">
                   <div className="bean-brand-logo-frame">
                     <img 
-                      src={fitoBean.logo} 
-                      alt={`${fitoBean.name} Roaster Mark`}
+                      src={partakerBean.logo} 
+                      alt="Partaker Roasters Logo"
                       className="bean-brand-logo-img"
                     />
                   </div>
                   <div className="bean-title-group">
-                    <span className="bean-subtitle-tag">{fitoBean.tier} &bull; {fitoBean.roast} Roast</span>
-                    <h3 className="bean-display-name">{fitoBean.name}</h3>
+                    <span className="bean-subtitle-tag">{partakerBean.name} Coffee Roasters &bull; {partakerBean.roast} Roast</span>
+                    <h3 className="bean-display-name">{partakerBean.beanName || partakerBean.name}</h3>
                     <p className="bean-mill-info">Producer: José Arnulfo 'Fito' Montiel &bull; Exporter: CafeNor Mill</p>
                   </div>
                 </div>
 
                 <p className="featured-bean-summary">
-                  {fitoBean.tagline}
+                  {partakerBean.tagline}
                 </p>
 
                 {/* Flavor Notes Pills */}
                 <div className="flavor-notes-pill-group">
-                  {fitoBean.notes.map((note) => (
+                  {partakerBean.notes.map((note) => (
                     <span key={note} className="flavor-pill gold-glow">
                       ✦ {note}
                     </span>
@@ -67,23 +67,23 @@ export default function BeanShowcase({ onSelectBeanForDrink }) {
                   <div className="metric-box">
                     <span className="metric-lbl">SWEETNESS</span>
                     <div className="metric-bar-bg">
-                      <div className="metric-fill" style={{ width: `${fitoBean.stats.sweetness}%` }} />
+                      <div className="metric-fill" style={{ width: `${partakerBean.stats.sweetness}%` }} />
                     </div>
-                    <span className="metric-val">{(fitoBean.stats.sweetness / 10).toFixed(1)}/10</span>
+                    <span className="metric-val">{(partakerBean.stats.sweetness / 10).toFixed(1)}/10</span>
                   </div>
                   <div className="metric-box">
                     <span className="metric-lbl">CITRUS ACIDITY</span>
                     <div className="metric-bar-bg">
-                      <div className="metric-fill" style={{ width: `${fitoBean.stats.acidity}%` }} />
+                      <div className="metric-fill" style={{ width: `${partakerBean.stats.acidity}%` }} />
                     </div>
-                    <span className="metric-val">{(fitoBean.stats.acidity / 10).toFixed(1)}/10</span>
+                    <span className="metric-val">{(partakerBean.stats.acidity / 10).toFixed(1)}/10</span>
                   </div>
                   <div className="metric-box">
                     <span className="metric-lbl">AROMA</span>
                     <div className="metric-bar-bg">
-                      <div className="metric-fill" style={{ width: `${fitoBean.stats.aroma}%` }} />
+                      <div className="metric-fill" style={{ width: `${partakerBean.stats.aroma}%` }} />
                     </div>
-                    <span className="metric-val">{(fitoBean.stats.aroma / 10).toFixed(1)}/10</span>
+                    <span className="metric-val">{(partakerBean.stats.aroma / 10).toFixed(1)}/10</span>
                   </div>
                 </div>
 
@@ -91,7 +91,7 @@ export default function BeanShowcase({ onSelectBeanForDrink }) {
                   <button 
                     type="button" 
                     className="action-btn view-lore-btn"
-                    onClick={() => setSelectedBeanForModal(fitoBean)}
+                    onClick={() => setSelectedBeanForModal(partakerBean)}
                   >
                     <span>Read Producer Story</span>
                     <span className="btn-icon">📖</span>
@@ -100,7 +100,7 @@ export default function BeanShowcase({ onSelectBeanForDrink }) {
                     href="#menu" 
                     className="action-btn brew-btn"
                     onClick={() => {
-                      if (onSelectBeanForDrink) onSelectBeanForDrink(fitoBean.name);
+                      if (onSelectBeanForDrink) onSelectBeanForDrink(partakerBean.name);
                     }}
                   >
                     <span>Order Drinks with This Bean</span>
@@ -209,7 +209,7 @@ export default function BeanShowcase({ onSelectBeanForDrink }) {
           </div>
 
           <div className="other-roasters-grid">
-            {coffeeBeans.filter(b => b.id !== "fito-montiel" && b.id !== "el-origen").map(bean => (
+            {coffeeBeans.filter(b => b.id !== "partaker" && b.id !== "el-origen").map(bean => (
               <div 
                 key={bean.id} 
                 className="mini-roaster-glass-card"

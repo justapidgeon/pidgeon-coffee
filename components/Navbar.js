@@ -20,16 +20,19 @@ export default function Navbar() {
 
   return (
     <header className="site-header">
-      {/* Top Glass Announcement Bar inspired by Verve & Stone Street */}
+      {/* Top Glass Announcement Bar */}
       {!bannerDismissed && (
         <div className="announcement-bar">
           <div className="announcement-content">
             <span className="announcement-sparkle">✦</span>
-            <span className="announcement-text">
-              <strong>FRESH ROAST UPDATE:</strong> El Origen is back in stock &amp; Nicaraguan Fito Montiel Pacamara is now pouring!
+            <span className="announcement-text announcement-desktop">
+              <strong>FRESH ROAST UPDATE:</strong> El Origen is back &amp; Partaker: Fito Montiel Pacamara is now pouring!
+            </span>
+            <span className="announcement-text announcement-mobile">
+              <strong>FRESH ROAST:</strong> Partaker Pacamara &amp; El Origen!
             </span>
             <Link href="#beans" className="announcement-link">
-              Explore Beans →
+              Explore →
             </Link>
           </div>
           <button 
@@ -65,7 +68,7 @@ export default function Navbar() {
             <Link href="/#beans" className="nav-item-link">
               Beans <span className="nav-new-pill">New</span>
             </Link>
-            <Link href="/#about" className="nav-item-link">Our Story</Link>
+            <Link href="/#about" className="nav-item-link nav-story-link">Story</Link>
             
             <button 
               onClick={() => setIsCartOpen(true)} 
