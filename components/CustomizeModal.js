@@ -4,14 +4,16 @@ import { useState, useEffect, useRef } from "react";
 import { customizationOptions, getDrinkImageUrl, coffeeBeans } from "../data/menu";
 import { useCart } from "../context/CartContext";
 
-export default function CustomizeModal({ item, onClose }) {
+export default function CustomizeModal({ item, onClose, initialBean }) {
   const { addToCart } = useCart();
   const modalContentRef = useRef(null);
   const [selections, setSelections] = useState({
     size: "Small",
     temperature: "Hot",
     milk: item.defaultMilk || (item.allowedOptions?.includes("milk") ? "Whole" : "None"),
-    bean: item.allowedOptions?.includes("bean") ? (coffeeBeans.find(b => !b.outOfStock)?.name || coffeeBeans[0].name) : undefined,
+    bean: (initialBean && coffeeBeans.some(b => b.name === initialBean && !b.outOfStock))
+      ? initialBean
+      : (item.allowedOptions?.includes("bean") ? (coffeeBeans.find(b => !b.outOfStock)?.name || coffeeBeans[0].name) : undefined),
     sweetness: "None"
   });
   const [quantity, setQuantity] = useState(1);
@@ -527,7 +529,11 @@ export default function CustomizeModal({ item, onClose }) {
             {/* Roaster Notes & Heritage */}
             <div className="dossier-lore-section">
               <h4 className="dossier-section-title">ROASTER'S PROFILE & HERITAGE</h4>
-              <p className="dossier-lore-text">{inspectingBean.description}</p>
+              <div className="dossier-lore-paragraphs">
+                {inspectingBean.description.split("\n\n").map((para, idx) => (
+                  <p key={idx} className="dossier-lore-text">{para}</p>
+                ))}
+              </div>
               {inspectingBean.links && inspectingBean.links.length > 0 && (
                 <div className="dossier-links-row">
                   {inspectingBean.links.map((link, idx) => (

@@ -85,24 +85,30 @@ export const menuItems = [
 
 export const coffeeBeans = [
   {
-    id: "partaker",
-    name: "Partaker",
-    origin: "Ethiopia",
-    roasted: "Harrisburg, NC",
-    roast: "Medium",
+    id: "fito-montiel",
+    name: "Fito Montiel Pacamara",
+    origin: "Metapán, El Salvador",
+    roasted: "CafeNor Carbon-Neutral Mill",
+    roast: "Medium-Light",
     imageRoast: "Medium",
-    roastLevel: 3,
-    tier: "Single-Origin Reserve",
-    tagline: "Vibrant Ethiopian heirloom with juicy blueberry and apricot sweetness",
-    notes: ["Blueberry", "Dried Apricot", "Caramelized Sugars"],
-    logo: "/Coffee Bean Brands/Partaker.png",
-    description: "Craft roasted in Harrisburg, NC. Cultivated in high-altitude Ethiopian heirloom soils, delivering a cup bursting with sweet wild blueberry, candied apricot acidity, and golden caramelized sugars.",
+    roastLevel: 2,
+    tier: "Cup of Excellence Micro-Lot",
+    tagline: "Award-winning separation yielding playful citrus, juicy stone fruit and high sweetness",
+    notes: ["Playful Citrus", "Juicy Stone Fruit", "High Sweetness"],
+    logo: "/Coffee Bean Brands/Fito Montiel Pacamara.png",
+    inStock: true,
+    outOfStock: false,
+    stockStatus: "Featured Micro-Lot",
+    description: "This Pacamara separation from award-winning producer Fito Montiel yields playful citrus, juicy stone fruit and a high level of sweetness in the cup.\n\nThis is our second offering of the season from exporter CafeNor, a fully carbon neutral mill in the Metapan region of northern El Salvador owned by Alejandro and Rosa Maria Valiente. We’ve been purchasing coffee from the Valiente’s since 2022 and are proud to support their project in coffee innovation and sustainability. Second-generation coffee farmer Jose Arnulfo ‘Fito’ Montiel established his first parcel of land in the community of La Hondurita in 2000. Over the years, he’s established himself as a skilled producer, having placed twice in the El Salvador Cup of Excellence: 4th in 2006 and 2nd in 2007.\n\nFito grows Pacas, Bourbon and Gesha in addition to Pacamara and has an extensive catalog of processing protocols for washed, semi-washed, natural and honey methods. Since he operates his own wet mill and drying infrastructure, he’s also recently undertaken some experiments to see how modulating fermentation time impacts the flavor of his coffee.",
+    links: [
+      { label: "CafeNor Exporter Mill", url: "https://cafenor.com", type: "website" }
+    ],
     stats: {
-      acidity: 88,
-      sweetness: 86,
-      body: 66,
-      intensity: 70,
-      aroma: 95
+      acidity: 86,
+      sweetness: 94,
+      body: 74,
+      intensity: 72,
+      aroma: 92
     }
   },
   {
@@ -117,10 +123,9 @@ export const coffeeBeans = [
     tagline: "Sustainably partnered Colombian micro-lots with certified farm traceability",
     notes: ["Pink Bourbon", "Honey", "Floral"],
     logo: "/Coffee Bean Brands/El Origen.png",
-    outOfStock: true,
-    inStock: false,
-    stockStatus: "Restocking Later This Month",
-    restockNotice: "Restocking later this month",
+    outOfStock: false,
+    inStock: true,
+    stockStatus: "Back in Stock",
     description: "Partnering hand-in-hand with producing families across Tolima, Huila, Caldas, and Nariño. Origen Coffee guarantees certified traceability from cultivation to cup, delivering exceptional Colombian specialty coffee with fresh, unmatched flavor profiles.",
     links: [
       { label: "@origencoffeefarms", url: "https://www.instagram.com/origencoffeefarms/", type: "instagram" },
